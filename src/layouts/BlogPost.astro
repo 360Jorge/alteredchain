@@ -13,6 +13,20 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
+
+		<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$']],  // use $...$ for inline math
+      displayMath: [['$$', '$$']]
+    }
+  };
+</script>
+
+
+
+		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
 		<style>
 			main {
 				width: calc(100% - 2em);
