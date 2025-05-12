@@ -4,7 +4,7 @@ pubDate: "2024-05-09"
 description: "How the Cantor set and compactness helped reshape my intuition for infinity, structure, and rigor in topology."
 author: "Jorge Guzman"
 tags: ["topology", "math reflections", "compactness", "measure theory"]
-image: "../images/cantor_set_plot.png"
+heroImage: '/cantor_set_banner_960x480.png'
 ---
 
 This semester, I immersed myself in topology for the first time—and one of the most fascinating, mind-bending concepts I encountered was the **Cantor set**. What began as a seemingly simple construction—repeatedly removing the middle third from an interval—quickly unfolded into a set so rich with mathematical depth that it fundamentally changed the way I think about structure, continuity, and infinity.
@@ -23,7 +23,7 @@ Despite being created by deleting intervals repeatedly, the resulting set:
 
 Here's a visual representation of its construction up to 5 levels:
 
-![Cantor Set Construction](/images/cantor_set_plot.png)
+![Cantor Set Construction](/images/cantor_set_clean.png)
 
 Each horizontal line above shows the remaining intervals after each iteration. Notice how quickly the set becomes fragmented—and yet, incredibly, an uncountable number of points remain.
 
@@ -92,4 +92,15 @@ for i in range(6):
     cantor_set(ax, 0, i, 1, i)
 
 plt.tight_layout()
-plt.show()
+plt.show() 
+
+```
+## Looking Forward
+
+As I prepare to apply for PhD programs in pure mathematics, I realize this class didn’t just teach me topology—it helped shape the kind of mathematician I want to be. I want to keep asking questions that surprise me. I want to live in the tension between intuition and rigor. I want to contribute to conversations that explore the limits of mathematical understanding.
+
+The Cantor set was a humbling and inspiring chapter in that journey.
+
+Thanks for reading. If you're also into topology, or just love math that messes with your head, feel free to reach out!
+
+
