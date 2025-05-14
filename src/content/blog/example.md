@@ -2,6 +2,7 @@
 title: "Testing MathJax"
 pubDate: "2025-05-09"
 description: "Trying LaTeX rendering in Astro"
+heroImage: '/euler_identity_banner_960x480.png'
 ---
 
 Euler’s identity:
