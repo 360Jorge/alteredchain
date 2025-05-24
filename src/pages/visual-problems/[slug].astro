@@ -1,0 +1,23 @@
+---
+import { getCollection, getEntryBySlug } from 'astro:content';
+import { useMDXComponent } from 'astro/mdx';
+import BlogPost from '../../layouts/BlogPost.astro'; // ✅ your main layout
+
+export async function getStaticPaths() {
+  const entries = await getCollection('visual-problems');
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const entry = await getEntryBySlug('visual-problems', slug);
+
+if (!entry) throw new Error(`Post not found: ${slug}`);
+
+const { Content } = await entry.render();
+---
+
+<BlogPost {...entry.data}>
+  <Content />
+</BlogPost>

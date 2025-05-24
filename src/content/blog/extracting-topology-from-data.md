@@ -15,8 +15,12 @@ Topological data analysis studies the shape of data using concepts from topology
 
 To visualize this, we consider each data point as the center of a growing ball. As the balls expand, they begin to intersect, forming higher-dimensional shapes called simplicial complexes. Persistent homology records the birth and death of features like clusters or loops in a *persistence diagram*, which plots their lifespan across scales.
 
-![Persistence diagram visualization with growing balls](/images/persistence-diagram.png)  
-*Figure: Growth of balls and associated persistence diagram. The lifespan of topological features is recorded as points on the diagram.*
+
+<div style="text-align: center;">
+  <img src="/images/noisy-circle-data.png" alt="Persistence Diagram of Noisy Circle" style="max-width: 400px;">
+  <p><em>Figure: A clean H₁ loop emerges clearly in the persistence diagram from noisy circular data.</em></p>
+</div>
+
 
 
 ## Computational Pipeline

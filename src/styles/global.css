@@ -153,3 +153,64 @@ hr {
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
 }
+
+/* BaseLayout.astro styling */
+
+/*.post-preview h2 a {
+	text-decoration: none;
+	color: inherit;
+	transition: color 0.2s ease;
+  }
+  
+  .post-preview h2 a:hover {
+	text-decoration: none;
+	color:  #2337ff; 
+  }*/
+
+  .post-preview {
+	background: rgba(255, 255, 255, 0.6);
+	padding: 1.25rem;
+	margin-bottom: 2rem;
+	border-radius: 12px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+	transition: box-shadow 0.2s ease-in-out;
+	word-wrap: break-word;
+	width: 100%;
+	box-sizing: border-box;
+  }
+  
+  .post-preview:hover {
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .post-preview h2 a {
+	text-decoration: none;
+	color: inherit;
+	transition: color 0.2s ease;
+	white-space: normal;         /* ✅ allows wrapping */
+	overflow-wrap: break-word;   /* ✅ allows long words to wrap */
+	word-break: break-word;
+  }
+  
+  .post-preview h2 a:hover {
+	text-decoration: none;
+	color: #2337ff; /* or your hover color */
+  }
+  
+  .vp-read-more {
+	color: #2337ff;
+	text-decoration: none;
+  }
+  
+  .vp-read-more:hover {
+	text-decoration: underline;
+  }
+  
+
+  
+  
+
+  
+
+  
+  
