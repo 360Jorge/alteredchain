@@ -9,13 +9,12 @@ interface AnimatedStepProps {
 export default function AnimatedStep({ children, delay = 0 }: AnimatedStepProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay }}
-      style={{ marginBottom: '1rem' }}
+      transition={{ delay, duration: 0.5 }}
+      style={{ marginBottom: '1.5rem', background: '#f9f9f9', padding: '1rem' }}
     >
       {children}
     </motion.div>
   );
 }
-

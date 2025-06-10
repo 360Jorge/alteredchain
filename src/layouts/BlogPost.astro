@@ -17,15 +17,20 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<script>
   window.MathJax = {
     tex: {
-      inlineMath: [['$', '$']],  // use $...$ for inline math
-      displayMath: [['$$', '$$']]
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    svg: { fontCache: 'global' },
+    startup: {
+      ready: () => {
+        console.log('MathJax is loaded and ready!');
+        MathJax.startup.defaultReady();
+      }
     }
   };
 </script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 
-
-
-		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 
 		<style>
 			main {
@@ -90,6 +95,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 						<h1>{title}</h1>
 						<hr />
 					</div>
+
 					<slot />
 				</div>
 			</article>

@@ -1,13 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-// import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-
 import remarkMath from 'remark-math';
 import rehypeMathjax from 'rehype-mathjax';
-
 import react from '@astrojs/react';
-
 import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
