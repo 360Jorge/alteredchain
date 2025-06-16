@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { proofSteps} from '@components/proofSteps';
 import type { Kind } from '@components/proofSteps';
-import type { ReactNode } from 'react';
 
 const colorMap: Record<Kind, string> = {
   assumption: '#2563eb',
