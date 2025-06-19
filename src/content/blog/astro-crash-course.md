@@ -3,6 +3,7 @@ title: "Astro Crash Course: Build Lightning-Fast Sites With Ease"
 description: "A quick guide for learning Astro the practical way, perfect for small business sites, blogs, and component-driven projects."
 pubDate: 2025-06-15
 tags: ["astro", "web development", "crash course", "beginner"]
+heroImage: '/blog-placeholder-4.jpg'
 ---
 
 
