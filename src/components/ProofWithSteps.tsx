@@ -20,11 +20,19 @@ export function ProofWithSteps() {
   };
 
   useEffect(() => {
-    // Trigger MathJax re-typesetting after new step is shown
-    if (typeof window !== 'undefined' && window.MathJax) {
-        (window as any).MathJax?.typeset?.();
-    }
-  }, [index]); // 👈 re-run when step index changes
+    const waitForMathJax = () => {
+      const mj = (window as any).MathJax;
+  
+      if ((window as any).__MathJaxReady && mj?.typeset) {
+        mj.typeset();
+      } else {
+        setTimeout(waitForMathJax, 50); // 🌀 keep trying until ready
+      }
+    };
+  
+    waitForMathJax();
+  }, [index]);
+  
 
   return (
     <div style={{ maxWidth: '600px', margin: 'auto' }}>
@@ -75,3 +83,6 @@ export function ProofWithSteps() {
     </div>
   );
 }
+
+
+export default ProofWithSteps;

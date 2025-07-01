@@ -1,4 +1,20 @@
-import AnimatedStep from '../components/AnimatedStep.tsx';
+---
+layout: ../../layouts/BaseLayout.astro
+title: "Animated Parabola Post"
+description: "Exploring the minimum of a parabola with animation"
+pubDate: 2025-06-10
+tags: ["animation", "calculus", "visual"]
+isAnimated: true
+---
+
+
+import AnimatedStep from '@components/AnimatedStep';
+
+## Problem
+
+> If $f(x) = x^2 - 4x + 3$, what is the minimum value of $f(x)$ for real numbers $x$?
+
+---
 
 <AnimatedStep client:load>
   <h3>Step 1: Recognize the function type</h3>

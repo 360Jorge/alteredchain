@@ -14,7 +14,7 @@ export const proofSteps: ProofStep[] = [
   },
   {
     kind: 'implication',
-    text: 'Squaring gives $2 = \\frac{a^2}{b^2} \\Rightarrow a^2 = 2b^2',
+    text: 'Squaring gives $2 = \\frac{a^2}{b^2} \\Rightarrow a^2 = 2b^2$',
     support: 'We square both sides to eliminate the radical.',
   },
   {
