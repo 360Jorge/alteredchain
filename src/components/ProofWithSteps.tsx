@@ -35,7 +35,7 @@ export function ProofWithSteps() {
   
 
   return (
-    <div style={{ maxWidth: '600px', margin: 'auto' }}>
+    <div className="prose mx-auto px-4">
       {proofSteps.slice(0, index).map((step, i) => (
         <AnimatePresence key={i}>
           <motion.div
@@ -52,7 +52,7 @@ export function ProofWithSteps() {
           >
             <span
               style={{
-                borderBottom: '1px dotted gray',
+                // borderBottom: '1px dotted gray',
                 cursor: 'help',
               }}
               title={step.support}
