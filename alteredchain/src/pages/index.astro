@@ -1,0 +1,49 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+  <h1>Welcome to Altered Chain</h1>
+
+  <p>
+    Hello, I'm Jorge — a student of mathematics with an insatiable curiosity for the deep structures that govern both abstract theory and the physical world.
+  </p>
+
+  <p>
+    Altered Chain is my digital laboratory: a space where I explore the interplay between pure mathematics, physics, and data — from symmetry in tensor spaces to the hidden patterns behind real-world systems.
+  </p>
+
+  <p>
+    Whether you're a fellow math enthusiast, a student navigating science, or someone intrigued by the foundations of reality, this blog offers a blend of rigorous analysis, creative inquiry, and reflections on the evolving landscape of mathematical and scientific discovery.
+  </p>
+
+  <p>
+    Join me as I unravel chains of abstraction, connect ideas across disciplines, and contribute to a community passionate about understanding the universe through the lens of mathematics.
+  </p>
+
+  <p>
+    Currently, one of my favorite theorems is Maschke’s Theorem — a fundamental result in representation theory which states:
+  </p>
+
+  <blockquote>
+    Every finite-dimensional representation of a finite group over a field of characteristic not dividing the order of the group is completely reducible.
+  </blockquote>
+
+  <p>
+    It’s a beautifully precise insight into how symmetry can be decomposed — and it reflects the kind of structure and elegance I hope to uncover in both mathematics and physics.
+  </p>
+</main>
+
+		<Footer />
+	</body>
+</html>

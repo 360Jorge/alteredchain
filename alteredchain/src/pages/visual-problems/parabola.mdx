@@ -1,0 +1,35 @@
+---
+layout: ../../layouts/BaseLayout.astro
+title: "Animated Parabola Post"
+description: "Exploring the minimum of a parabola with animation"
+pubDate: 2025-06-10
+tags: ["animation", "calculus", "visual"]
+isAnimated: true
+---
+
+
+import AnimatedStep from '@components/AnimatedStep';
+
+## Problem
+
+> If $f(x) = x^2 - 4x + 3$, what is the minimum value of $f(x)$ for real numbers $x$?
+
+---
+
+<AnimatedStep client:load>
+  <h3>Step 1: Recognize the function type</h3>
+  <p>This is a quadratic: $ f(x) = x^2 - 4x + 3 $</p>
+</AnimatedStep>
+
+<AnimatedStep client:load delay={0.5}>
+  <h3>Step 2: Use vertex formula</h3>
+  <p>$ x = -\frac{b}{2a} = 2 $</p>
+</AnimatedStep>
+
+<AnimatedStep client:load delay={1}>
+  <h3>Step 3: Plug in to find the minimum</h3>
+  <p>$ f(2) = 4 - 8 + 3 = -1 $</p>
+</AnimatedStep>
+
+
+
