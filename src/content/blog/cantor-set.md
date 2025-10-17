@@ -67,7 +67,7 @@ I later came across an informal visualization that really resonated with me: ima
 
 *In this illustration, the circle represents a compact space. The ant, wandering around, is always contained—showing that compactness ensures the presence of limit points and prevents escape to infinity.*
 
-## A Bit of Code for Fun 🐍
+## A Bit of Code for Fun 
 
 Here's a simple Python script that draws the Cantor set using recursion:
 

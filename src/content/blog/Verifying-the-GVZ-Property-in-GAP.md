@@ -17,7 +17,7 @@ We implemented this test in [GAP](https://www.gap-system.org), a system for comp
 
 ---
 
-## 🔁 Full Flowchart of the Algorithm
+## Full Flowchart of the Algorithm
 
 ```gap
 START
@@ -63,7 +63,7 @@ If all χ passed, return TRUE (G is GVZ)
 Else, return FALSE
 ```
 
-## ✅ Working GAP Code
+## Working GAP Code
 
 ```gap
 IsGVZGroup := function(G)
@@ -111,7 +111,7 @@ end;
 
 ```
 
-## 🧠 What the Code Does
+## What the Code Does
 
 We’re checking the **GVZ condition**:
 
@@ -129,7 +129,7 @@ If this holds for all nonlinear irreducible characters, then $G$ is a **GVZ-grou
 
 ---
 
-## 🔍 What We Learned So Far
+## What We Learned So Far
 
 - We **only need to test nonlinear irreducible characters** because for linear ones (i.e., $\chi(1) = 1$), the GVZ condition is **vacuously true**:
   $$
@@ -144,7 +144,7 @@ If this holds for all nonlinear irreducible characters, then $G$ is a **GVZ-grou
 
 ---
 
-## 📊 Next Steps
+## Next Steps
 
 We’ll begin running this script across batches of known **o-basis groups** to test our conjecture empirically.
 
@@ -157,6 +157,6 @@ We'll log each result in a `.csv` file including:
 
 Once we gather enough data, we’ll explore:
 
-- 🧠 **Machine learning** tools to detect deeper structural traits
-- 📈 **Visualizations** comparing GVZ vs. o-basis patterns
-- 🧩 Discovering counterexamples or formulating improved conjectures
+- **Machine learning** tools to detect deeper structural traits
+- **Visualizations** comparing GVZ vs. o-basis patterns
+- Discovering counterexamples or formulating improved conjectures

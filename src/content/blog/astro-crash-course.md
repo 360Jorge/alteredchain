@@ -13,11 +13,11 @@ Whether you're creating a personal blog or a full website for a small business, 
 
 ---
 
-## 🔥 What is Astro?
+## What is Astro?
 
 **Astro** is a modern web framework that:
 - Uses components (like React, Vue, etc.)
-- Ships **zero JavaScript by default** ⚡
+- Ships **zero JavaScript by default** 
 - Optimizes for speed and content-heavy sites
 - Supports `.astro`, `.jsx`, `.mdx`, `.ts`, and more
 
@@ -25,7 +25,7 @@ It's perfect for sites that are mostly content but might need sprinkles of inter
 
 ---
 
-## 📁 Project Structure Overview
+## Project Structure Overview
 
 | Folder/File         | Purpose                                                  |
 |---------------------|-----------------------------------------------------------|
@@ -38,7 +38,7 @@ It's perfect for sites that are mostly content but might need sprinkles of inter
 
 ---
 
-## 🧠 Anatomy of an `.astro` File
+## Anatomy of an `.astro` File
 
 ```astro
 ---
@@ -53,7 +53,7 @@ import MyComponent from '../components/MyComponent.astro';
 
 This is a blend of JavaScript and HTML — with component logic in the top block.
 
-## 📦 Layouts: Wrapping Your Pages
+## Layouts: Wrapping Your Pages
 
 A **layout** is like a page shell. It wraps pages with a consistent structure.
 
@@ -83,9 +83,9 @@ title: "Homepage"
 
 ```
 
-✅ Tip: Don't put full page content inside your layout. Use it only as a wrapper.
+Tip: Don't put full page content inside your layout. Use it only as a wrapper.
 
-## 🧩 Components
+## Components
 
 Create reusable building blocks:
 
@@ -117,12 +117,12 @@ npm run dev      # start local dev server
 
 Then visit: http://localhost:4321
 
-## 🚀 Deployment
+## Deployment
 
 - Astro works great on Vercel and Netlify
 - Connect your GitHub repo → auto builds + previews
 
-## 💡 Common Mistake: Layout Confusion
+## Common Mistake: Layout Confusion
 
 It’s easy to accidentally paste your homepage content into the layout file. But remember:
 
@@ -132,7 +132,7 @@ It’s easy to accidentally paste your homepage content into the layout file. Bu
 
 Once you internalize that, Astro becomes really fun to use 🚀
 
-## 📚 Want to Learn More?
+## Want to Learn More?
 
 [Official Astro Docs](https://docs.astro.build/en/getting-started/)
 
@@ -140,6 +140,6 @@ Once you internalize that, Astro becomes really fun to use 🚀
 
 [Astro + Tailwind Guide](https://docs.astro.build/en/guides/styling/#tailwind)
 
-## 🎉 Keep Learning by Doing
+## Keep Learning by Doing
 
 I personally learn best by building, breaking, and fixing — so if you're doing the same, you're on the right path.

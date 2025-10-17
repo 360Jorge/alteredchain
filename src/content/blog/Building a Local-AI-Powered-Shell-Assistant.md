@@ -6,7 +6,7 @@ tags: ["AI", "Shell", "Ollama", "Python", "CLI", "Dev Projects"]
 heroImage: '/blog-placeholder-5.jpg'
 ---
 
-🚀 This week, I built my own **AI-powered shell assistant** that runs completely **locally** on my machine using [`Ollama`](https://ollama.com/), [`Mistral`](https://ollama.com/library/mistral), and Python.
+This week, I built my own **AI-powered shell assistant** that runs completely **locally** on my machine using [`Ollama`](https://ollama.com/), [`Mistral`](https://ollama.com/library/mistral), and Python.
 
 It’s kind of like having **ChatGPT inside your terminal**, but on your terms — fast, offline, and private.
 
@@ -14,7 +14,7 @@ Here’s a full breakdown of how it works, how I built it, and how I made it run
 
 ---
 
-## 🧠 What It Does
+## What It Does
 
 You type a natural-language request in your terminal:
 
@@ -29,12 +29,12 @@ ls -d */
 And then asks:
 
 ```bash
-⚡ Run this command? (y/n):
+ Run this command? (y/n):
 ```
 
 If you confirm, it runs the command and logs it to a history file for future reference.
 
-## 🧱 Step-by-Step 
+## Step-by-Step 
 
 #### 1. Folder structure
 
@@ -86,17 +86,17 @@ def save_history(history):
         json.dump(history, f, indent=2)
 
 def shell_assistant():
-    print("\n🧠 Ask your terminal assistant anything (type 'exit' to quit):")
+    print("\n Ask your terminal assistant anything (type 'exit' to quit):")
     history = load_history()
 
     while True:
         try:
-            user_input = input("\n💬 You: ").strip()
+            user_input = input("\n You: ").strip()
             if user_input.lower() in ["exit", "quit"]:
-                print("👋 Exiting assistant.")
+                print(" Exiting assistant.")
                 break
 
-            print("🤖 Thinking...")
+            print(" Thinking...")
             response = ask_ollama(user_input)
 
             # Extract shell command from markdown code block
@@ -113,7 +113,7 @@ def shell_assistant():
 
 
             command = command.strip()
-            print(f"\n🧠 Suggested command:\n\033[92m{command}\033[0m")
+            print(f"\n Suggested command:\n\033[92m{command}\033[0m")
 
             confirm = input("\n⚡ Run this command? (y/n): ").strip().lower()
             if confirm == 'y':
@@ -121,13 +121,13 @@ def shell_assistant():
                 history.append({"input": user_input, "command": command})
                 save_history(history)
             else:
-                print("❌ Skipped.")
+                print("Skipped.")
 
         except KeyboardInterrupt:
-            print("\n👋 Goodbye!")
+            print("\n Goodbye!")
             break
         except Exception as e:
-            print(f"❗ Error: {e}")
+            print(f"Error: {e}")
 
 ```
 
@@ -203,7 +203,7 @@ $ pip install -e .
 
 This registers the shell-assist command — but only inside your virtual environment by default.
 
-## 🧩 Making it Work Globally
+## Making it Work Globally
 
 If you want to use `shell-assist` from any terminal (even without activating the venv), you need to update your PATH.
 
@@ -232,7 +232,7 @@ Now you can open any terminal and run:
 $ shell-assist
 ```
 
-Boom 💥! It works.
+Boom! It works.
 
 ## Final Thoughts
 

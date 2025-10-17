@@ -13,7 +13,7 @@ tags: ["GRE", "Algebra", "Visualization"]
 
 ## Step-by-Step Solution
 
-### 🟦 Step 1: Recognize the function type
+### Step 1: Recognize the function type
 
 This is a **quadratic** function:  
 $$
@@ -23,7 +23,7 @@ It opens **upward** (since $a = 1 > 0$), so it has a **minimum** at the vertex.
 
 ---
 
-### 🟦 Step 2: Use the vertex formula
+### Step 2: Use the vertex formula
 
 The vertex of a parabola $ax^2 + bx + c$ is at:  
 $$
@@ -32,7 +32,7 @@ $$
 
 ---
 
-### 🟦 Step 3: Plug in the vertex to find the minimum
+### Step 3: Plug in the vertex to find the minimum
 
 $$
 f(2) = (2)^2 - 4(2) + 3 = 4 - 8 + 3 = -1
@@ -40,7 +40,7 @@ $$
 
 ---
 
-## ✅ Final Answer:
+## Final Answer:
 
 The **minimum value** of $f(x)$ is:  
 $$
@@ -49,6 +49,6 @@ $$
 
 ---
 
-## 📈 Visual Insight (Coming Soon!)
+## Visual Insight (Coming Soon!)
 
 *(We’ll later add a parabola plot here that shows the vertex at (2, -1))*

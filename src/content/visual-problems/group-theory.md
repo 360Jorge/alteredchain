@@ -11,7 +11,7 @@ tags: ["GRE", "Series", "Visualization"]
 
 ---
 
-### 🔧 Solution Strategy
+### Solution Strategy
 
 We use the **coset property of kernels** for group homomorphisms:
 
@@ -31,11 +31,11 @@ $
 77 \mod 30 = 17
 $
 
-✅ So $ \phi(17) = 7 $ as well.
+So $ \phi(17) = 7 $ as well.
 
 ---
 
-### 🧠 Final Answer:
+### Final Answer:
 
 $$
 \boxed{17} \quad \text{(Option C)}
@@ -43,7 +43,7 @@ $$
 
 ---
 
-### 💡 Group Theory Takeaway
+### Group Theory Takeaway
 
 If you know:
 - the image of an element $g$,
