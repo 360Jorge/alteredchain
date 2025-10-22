@@ -11,7 +11,17 @@ tags: ["GRE", "Series", "Visualization"]
 
 ---
 
-### Solution Strategy
+<details>
+<summary>Hint (click to expand)</summary>
+
+Use the fact that for a group homomorphism $\phi: G \to H$, the preimage of $\phi(g)$ is the coset $ g \cdot \ker(\phi) $.
+
+</details>
+
+---
+
+<details>
+<summary>Solution Strategy</summary>
 
 We use the **coset property of kernels** for group homomorphisms:
 
@@ -33,6 +43,8 @@ $
 
 So $ \phi(17) = 7 $ as well.
 
+</details>
+
 ---
 
 ### Final Answer:
@@ -51,11 +63,6 @@ If you know:
 
 then you can **immediately determine all other preimages** of $\phi(g)$ using cosets of the kernel.
 
----
 
-<details>
-<summary>Hint (click to expand)</summary>
 
-Use the fact that for a group homomorphism $\phi: G \to H$, the preimage of $\phi(g)$ is the coset $ g \cdot \ker(\phi) $.
 
-</details>

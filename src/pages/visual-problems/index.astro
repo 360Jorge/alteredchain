@@ -29,8 +29,8 @@ const allPosts = [...staticPostEntries, ...interactivePosts];
 allPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 ---
 
-<BaseLayout title="Visual Problem Walkthrough" description="Explore all math problems with step-by-step visual solutions.">
-  <p>Explore all the math problem walkthroughs and visual explanations below.</p>
+<BaseLayout title="Problem Solving & Visual Walkthroughs" description="Explore all math problems with step-by-step visual solutions.">
+  <p>Explore challenging math problems — from Putnam and GRE to interesting puzzles I’ve found along the way. Each post includes both the reasoning and the visual intuition behind the solution.</p>
 
   <ul style="list-style: none; padding: 0;">
     {allPosts.map(({ url, title, description, pubDate }) => (
