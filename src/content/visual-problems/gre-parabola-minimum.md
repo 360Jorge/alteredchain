@@ -11,8 +11,6 @@ tags: ["GRE", "Algebra", "Visualization"]
 
 ---
 
-## Step-by-Step Solution
-
 ### Step 1: Recognize the function type
 
 This is a **quadratic** function:  
@@ -49,6 +47,8 @@ $$
 
 ---
 
-## Visual Insight (Coming Soon!)
+## Visual Insight 
 
-*(We’ll later add a parabola plot here that shows the vertex at (2, -1))*
+![Vertex](/images/parabola.png)
+
+

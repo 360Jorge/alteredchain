@@ -2,12 +2,8 @@
 title: "Problem: Five Points on a Sphere"
 pubDate: "2025-10-07"
 description: "Five Points on a Sphere"
-author: "Jorge Guzman"
 tags: ["putnam problem", "math reflections", "geometry", "combinatorics"]
-heroImage: '/blog-placeholder-4.jpg'
 ---
-
-# Problem: Five Points on a Sphere
 
 > **Claim:**  
 > Given any five points on a sphere, show that some four of them must lie on a **closed hemisphere**.
