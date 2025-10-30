@@ -29,8 +29,8 @@ const allPosts = [...staticPostEntries, ...interactivePosts];
 allPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 ---
 
-<BaseLayout title="Problem Solving & Visual Walkthroughs" description="Explore all math problems with step-by-step visual solutions.">
-  <p>Explore challenging math problems — from Putnam and GRE to interesting puzzles I’ve found along the way. Each post includes both the reasoning and the visual intuition behind the solution.</p>
+<BaseLayout title="Problem Solving" description="Explore all math problems with step-by-step visual solutions.">
+  <p>Explore challenging math problems — from Putnam and GRE to interesting puzzles I’ve found along the way.</p>
 
   <ul style="list-style: none; padding: 0;">
     {allPosts.map(({ url, title, description, pubDate }) => (
@@ -39,7 +39,7 @@ allPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getT
           <h2><a href={url}>{title}</a></h2>
           <p><em>{new Date(pubDate).toLocaleDateString()}</em></p>
           <p>{description}</p>
-          <p><a href={url}>Read more →</a></p>
+          
         </article>
       </li>
     ))}
