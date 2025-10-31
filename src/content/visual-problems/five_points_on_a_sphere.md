@@ -1,5 +1,5 @@
 ---
-title: "Problem: Five Points on a Sphere"
+title: "Five Points on a Sphere"
 pubDate: "2025-10-07"
 description: "Five Points on a Sphere"
 tags: ["putnam problem", "math reflections", "geometry", "combinatorics"]

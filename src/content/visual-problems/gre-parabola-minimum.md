@@ -1,5 +1,5 @@
 ---
-title: "Visual GRE Problem: Minimum of a Parabola"
+title: "Minimum of a Parabola"
 pubDate: "2025-05-20"
 description: "Step-by-step solution and visual explanation of a basic GRE algebra problem"
 tags: ["GRE", "Algebra", "Visualization"]

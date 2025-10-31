@@ -3,7 +3,7 @@ title: "The Pigeonhole Principle"
 pubDate: "2025-10-22"
 description: "Pigeonhole Principle explanation"
 tags: ["Problem Solving", "Combinatorics"]
-heroImage: '/blog-placeholder-5.jpg'
+heroImage: '/PigeonholePrinciple.png'
 ---
 
 ## Introduction

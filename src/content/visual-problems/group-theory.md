@@ -1,5 +1,5 @@
 ---
-title: "Visual GRE Problem: Group Theory"
+title: "GRE Group Theory Problem"
 pubDate: "2025-05-28"
 description: "Step-by-step solution and visual explanation of a basic GRE series problem"
 tags: ["GRE", "Series", "Visualization"]
