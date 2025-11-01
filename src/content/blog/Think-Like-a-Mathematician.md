@@ -3,7 +3,7 @@ title: "How I Learned to Break Down Proofs (and Think Like a Mathematician)"
 description: "Dr. Harmon’s advice helped me move beyond memorization and learn how to understand the structure of mathematical proofs."
 pubDate: 2025-06-19
 tags: [topology, proof-strategy, math-learning, compactness, real-analysis]
-heroImage: '/blog-placeholder-3.jpg'
+heroImage: '/chalkboard-thought.png'
 ---
 
 When I was studying for my topology exam, I got an email from Dr. Harmon that completely changed the way I approach mathematical proofs. I used to think that memorizing steps was the key, but his advice showed me how to *study the structure* of a proof.
