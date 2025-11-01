@@ -26,7 +26,7 @@ export function ProofWithSteps() {
       if ((window as any).__MathJaxReady && mj?.typeset) {
         mj.typeset();
       } else {
-        setTimeout(waitForMathJax, 50); // 🌀 keep trying until ready
+        setTimeout(waitForMathJax, 50); // keep trying until ready
       }
     };
   

@@ -322,3 +322,28 @@ hr {
   opacity: 1;
   text-decoration: underline;
 }
+
+.math-capsule .mjx-container {
+  color: #4ea8de; /* matches your tactic title color */
+}
+
+
+.math-capsule-text {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  will-change: opacity, transform;
+}
+
+.math-capsule-text.is-rendering {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.math-capsule-text.is-ready {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* keep math readable */
+.math-capsule .mjx-container {
+  color: #4ea8de;
+}
