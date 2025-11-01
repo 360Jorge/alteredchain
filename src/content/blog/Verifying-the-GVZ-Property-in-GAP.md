@@ -3,7 +3,7 @@ title: "Verifying the GVZ Property in GAP: A Computational Approach"
 description: "We explore how to check whether a finite group is a GVZ-group using GAP, character theory, and code. Includes visual flow and example analysis."
 pubDate: 2025-07-09
 tags: ["representation theory", "GVZ groups", "GAP", "character theory", "computational algebra"]
-heroImage: '/blog-placeholder-4.jpg'
+heroImage: '/gap.png'
 ---
 
 <section class="prose mx-auto px-4 py-8">
