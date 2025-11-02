@@ -347,3 +347,66 @@ hr {
 .math-capsule .mjx-container {
   color: #4ea8de;
 }
+
+
+/*Conic Section*/
+
+.conic-toy {
+  background: #0f172a;
+  color: #fff;
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.25rem 1.5rem;
+  margin: 2rem 0;
+  max-width: 38rem;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.conic-toy-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.conic-toy-label {
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+.conic-toy-type {
+  font-size: 0.8rem;
+}
+
+.conic-toy-slider {
+  width: 100%;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.conic-toy-eq {
+  margin-bottom: 1rem;
+}
+
+.conic-toy-svg {
+  background: rgba(15, 23, 42, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 1rem;
+  height: 220px;
+  overflow: hidden;
+}
+
+.conic-note {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* MathJax inside the toy */
+.conic-toy .mjx-container {
+  color: #fff;
+}
+
+
+
+/*Conic Section*/

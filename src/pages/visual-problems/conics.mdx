@@ -1,0 +1,33 @@
+---
+layout: ../../layouts/BaseLayout.astro
+title: "Conic sections with eccentricity"
+description: "Interactive demo of how e changes the shape"
+pubDate: 2025-06-14
+tags: ["conics", "geometry", "visual", "eccentricity"]
+isAnimated: true
+---
+
+import ConicToy from '@components/ConicToy'
+import MathJaxLoader from '@components/MathJaxLoader'
+
+# Conic sections from eccentricity
+
+Most people first meet conics by “cutting the cone,” but there’s a really nice
+way to describe them using **eccentricity** \( e \).
+
+- \(0 \le e < 1\): ellipse  
+- \(e = 1\): parabola  
+- \(e > 1\): hyperbola  
+
+Here’s a small interactive block — move the slider and watch the curve change.
+
+<MathJaxLoader client:load />
+<ConicToy client:load />
+
+The polar equation we’re using here is
+
+$$
+r(\theta) = \frac{p}{1 + e \cos \theta}
+$$
+
+where \(p\) is the semi-latus rectum (we fixed it to \(p = 1\) in the demo).

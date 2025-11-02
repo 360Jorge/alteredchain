@@ -3,86 +3,112 @@ import MathJaxLoader from './MathJaxLoader';
 
 const CAPSULES = [
   {
-    title: 'Euler’s identity',
-    text: 'The most beautiful formula: $$e^{i\\pi} + 1 = 0.$$',
-  },
-  {
-    title: 'Binomial trick',
-    text: 'Use $$(1 + x)^n = \\sum_{k=0}^n \\binom{n}{k} x^k$$ to expand quickly.',
-  },
-  {
     title: 'Modular inverse',
     text: 'For prime $p$, $$a^{-1} \\equiv a^{p-2} \\pmod{p}.$$',
   },
   {
+    title: 'Euler’s identity',
+    text: 'The most beautiful formula: $$e^{i\\pi} + 1 = 0.$$',
+  },
+  {
+    title: 'Test small cases',
+    text: 'Try $n=1,2,3$ first. Small cases reveal patterns.',
+  },
+  {
     title: 'Track invariants',
-    text: 'In dynamical/combinatorial problems, find what never changes. That’s your compass.',
+    text: 'In combinatorics/dynamics, find what never changes.',
   },
 ];
 
 export default function MathCapsule() {
   const [idx, setIdx] = useState(() => Math.floor(Math.random() * CAPSULES.length));
-  const [rendering, setRendering] = useState(false);
 
-  // auto-rotate
+  // auto rotate
   useEffect(() => {
     const id = setInterval(() => {
       setIdx((i) => (i + 1) % CAPSULES.length);
-    }, 10000);
+    }, 7000);
     return () => clearInterval(id);
   }, []);
 
-  // run MathJax every time the text changes
+  // 🔵 1) typeset on *first mount* no matter what
   useEffect(() => {
-    setRendering(true);
+    let cancelled = false;
 
-    const tryTypeset = () => {
-      // 1) if MathJax is ready, typeset
-      if (window.MathJax?.typesetPromise) {
-        window.MathJax.typesetPromise().then(() => {
-          setRendering(false);
-        });
-      } else if (window.MathJax?.typeset) {
-        window.MathJax.typeset();
-        setRendering(false);
+    const poll = () => {
+      if (typeof window === 'undefined') return;
+      const w = window;
+      const mj = w.MathJax;
+
+      if (mj?.typesetPromise) {
+        mj.typesetPromise();
+        return;
       }
-      // 2) if our loader said "I'm ready", but MathJax not on window yet, try again
-      else if (window.__MathJaxReady) {
-        // try again in a bit
-        setTimeout(tryTypeset, 120);
+      if (mj?.typeset) {
+        mj.typeset();
+        return;
       }
-      // 3) not ready at all yet → wait a bit and re-try
-      else {
-        setTimeout(tryTypeset, 120);
+
+      // not ready yet → try again
+      if (!cancelled) {
+        setTimeout(poll, 120);
       }
     };
 
-    // first attempt
-    tryTypeset();
+    poll();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // 🔵 2) re-typeset every time we change tactic
+  useEffect(() => {
+    let cancelled = false;
+
+    const poll = () => {
+      const w = window;
+      const mj = w.MathJax;
+
+      if (mj?.typesetPromise) {
+        mj.typesetPromise();
+        return;
+      }
+      if (mj?.typeset) {
+        mj.typeset();
+        return;
+      }
+
+      if (!cancelled) {
+        setTimeout(poll, 120);
+      }
+    };
+
+    poll();
+
+    return () => {
+      cancelled = true;
+    };
   }, [idx]);
 
   const c = CAPSULES[idx];
 
   return (
     <div className="math-capsule">
-      {/* loads scripts once */}
+      {/* this *tries* to load MathJax, but we don't rely on the hydration order */}
       <MathJaxLoader />
 
       <p className="math-capsule-tag">problem-solving tactics</p>
       <h3>{c.title}</h3>
 
-      {/* fade wrapper */}
-      <div
-        className={`math-capsule-text ${rendering ? 'is-rendering' : 'is-ready'}`}
-        dangerouslySetInnerHTML={{ __html: c.text }}
-      />
+      {/* we keep this simple, no fade for now to remove all possible “hide before ready” issues */}
+      <p dangerouslySetInnerHTML={{ __html: c.text }} />
 
       <div className="math-capsule-actions">
-        <button
-          type="button"
-          className="math-capsule-btn"
-          onClick={() => setIdx((idx + 1) % CAPSULES.length)}
-        >
+        <button type="button" onClick={() => setIdx((idx - 1 + CAPSULES.length) % CAPSULES.length)}>
+          ← previous
+        </button>
+        <button type="button" onClick={() => setIdx((idx + 1) % CAPSULES.length)}>
           another →
         </button>
         <a href="/visual-problems" className="capsule-link">
