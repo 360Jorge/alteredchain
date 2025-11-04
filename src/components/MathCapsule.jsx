@@ -31,7 +31,7 @@ export default function MathCapsule() {
     return () => clearInterval(id);
   }, []);
 
-  // 🔵 1) typeset on *first mount* no matter what
+  //  1) typeset on *first mount* no matter what
   useEffect(() => {
     let cancelled = false;
 
@@ -62,7 +62,7 @@ export default function MathCapsule() {
     };
   }, []);
 
-  // 🔵 2) re-typeset every time we change tactic
+  //  2) re-typeset every time we change tactic
   useEffect(() => {
     let cancelled = false;
 
