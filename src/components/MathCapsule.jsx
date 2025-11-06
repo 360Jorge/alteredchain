@@ -18,7 +18,20 @@ const CAPSULES = [
     title: 'Track invariants',
     text: 'In combinatorics/dynamics, find what never changes.',
   },
+  {
+    title: 'Permutations',
+    text: 'Number of ways to arrange $k$ objects out of $n$: $$^nP_k = \\frac{n!}{(n-k)!}.$$ Order **matters**.',
+  },
+  {
+    title: 'Combinations',
+    text: 'Number of ways to choose $k$ objects out of $n$: $$\\binom{n}{k} = \\frac{n!}{k!(n-k)!} = \\frac{n(n-1)\\cdots(n-k+1)}{k!}.$$ Order **does not matter**.',
+  },
+  {
+    title: 'Relation between them',
+    text: 'Permutations and combinations are connected by $$^nP_k = k!\\binom{n}{k}.$$ Choosing first, then arranging.',
+  },
 ];
+
 
 export default function MathCapsule() {
   const [idx, setIdx] = useState(() => Math.floor(Math.random() * CAPSULES.length));
@@ -27,7 +40,7 @@ export default function MathCapsule() {
   useEffect(() => {
     const id = setInterval(() => {
       setIdx((i) => (i + 1) % CAPSULES.length);
-    }, 7000);
+    }, 25000);
     return () => clearInterval(id);
   }, []);
 

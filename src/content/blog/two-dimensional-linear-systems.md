@@ -3,6 +3,7 @@ title: "From Lines to Planes: Understanding Two-Dimensional Linear Systems"
 description: "A geometric journey through two-dimensional linear systems — centers, spirals, saddles, and the beauty of phase portraits."
 pubDate: 2025-11-04
 tags: ["dynamical systems", "linear algebra", "phase portraits", "stability"]
+heroImage: '/linear-systems.png'
 ---
 
 ## Breaking Free from the Line
