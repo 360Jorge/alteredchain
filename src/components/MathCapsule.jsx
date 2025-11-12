@@ -7,6 +7,10 @@ const CAPSULES = [
     text: 'For prime $p$, $$a^{-1} \\equiv a^{p-2} \\pmod{p}.$$',
   },
   {
+    title: 'Fermat’s Little Theorem',
+    text: 'If $p$ is prime and $a$ is not divisible by $p$, then $$a^{p-1} \\equiv 1 \\pmod{p}.$$ Forms the basis for modular inverses.',
+  },
+  {
     title: 'Euler’s identity',
     text: 'The most beautiful formula: $$e^{i\\pi} + 1 = 0.$$',
   },

@@ -1,8 +1,25 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import MathJaxLoader from './MathJaxLoader';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
+
+const MathJaxLoader = () => {
+  useEffect(() => {
+    const w = window as any;
+    if (!w.MathJax) {
+      w.__MathJaxReady = false;
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js';
+      script.async = true;
+      script.onload = () => {
+        w.__MathJaxReady = true;
+      };
+      document.head.appendChild(script);
+    }
+  }, []);
+  return null;
+};
 
 const ConicToy: React.FC = () => {
   const [e, setE] = useState<number>(0.4);
+  const equationRef = useRef<HTMLParagraphElement>(null);
   const p = 1;
 
   const points = useMemo(() => {
@@ -23,16 +40,15 @@ const ConicToy: React.FC = () => {
   useEffect(() => {
     const run = () => {
       const w = window as any;
-      if (w.MathJax?.typesetPromise) {
-        w.MathJax.typesetPromise();
-      } else if (w.MathJax?.typeset) {
-        w.MathJax.typeset();
-      } else if (w.__MathJaxReady) {
-        setTimeout(run, 80);
+      if (equationRef.current && w.MathJax?.typesetPromise) {
+        w.MathJax.typesetPromise([equationRef.current]).catch((err: any) => console.log(err));
+      } else if (w.__MathJaxReady === false) {
+        setTimeout(run, 100);
+      } else if (w.__MathJaxReady === true) {
+        setTimeout(run, 50);
       }
     };
-    const t = setTimeout(run, 50);
-    return () => clearTimeout(t);
+    run();
   }, [e]);
 
   const viewBoxSize = 220;
@@ -42,12 +58,34 @@ const ConicToy: React.FC = () => {
     e === 0 ? 'circle' : e > 0 && e < 1 ? 'ellipse' : Math.abs(e - 1) < 1e-3 ? 'parabola' : 'hyperbola';
 
   return (
-    <div className="conic-toy">
+    <div style={{
+      background: 'linear-gradient(to bottom, #0f172a, #1e293b)',
+      padding: '32px',
+      borderRadius: '16px',
+      color: 'white',
+      maxWidth: '700px',
+      margin: '0 auto',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    }}>
       <MathJaxLoader />
 
-      <div className="conic-toy-top">
-        <p className="conic-toy-label">Conic explorer</p>
-        <p className="conic-toy-type">
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '20px'
+      }}>
+        <p style={{
+          margin: 0,
+          fontSize: '12px',
+          textTransform: 'uppercase',
+          letterSpacing: '1px',
+          opacity: 0.6
+        }}>Conic explorer</p>
+        <p style={{
+          margin: 0,
+          fontSize: '16px'
+        }}>
           e = {e.toFixed(2)} → <strong>{conic}</strong>
         </p>
       </div>
@@ -59,23 +97,39 @@ const ConicToy: React.FC = () => {
         step={0.01}
         value={e}
         onChange={(ev) => setE(parseFloat(ev.target.value))}
-        className="conic-toy-slider"
-      />
-
-      <p
-        className="conic-toy-eq"
-        dangerouslySetInnerHTML={{
-          __html: `$$r(\\theta) = \\frac{${p}}{1 + ${e.toFixed(2)}\\cos\\theta}$$`,
+        style={{
+          width: '100%',
+          height: '6px',
+          marginBottom: '24px',
+          cursor: 'pointer',
+          accentColor: '#38bdf8'
         }}
       />
 
-      <div className="conic-toy-svg">
+      <p
+        ref={equationRef}
+        style={{
+          textAlign: 'center',
+          fontSize: '18px',
+          margin: '20px 0',
+          minHeight: '50px'
+        }}
+      >
+        {`$$r(\\theta) = \\frac{${p}}{1 + ${e.toFixed(2)}\\cos\\theta}$$`}
+      </p>
+
+      <div style={{
+        background: 'rgba(0,0,0,0.3)',
+        borderRadius: '8px',
+        padding: '20px',
+        marginBottom: '16px'
+      }}>
         <svg
           width="100%"
           height="100%"
           viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
+          style={{ display: 'block' }}
         >
-          {/* axes */}
           <line
             x1={viewBoxSize / 2}
             y1={0}
@@ -93,7 +147,6 @@ const ConicToy: React.FC = () => {
             strokeWidth={1}
           />
 
-          {/* curve */}
           <polyline
             fill="none"
             stroke="#38bdf8"
@@ -109,7 +162,12 @@ const ConicToy: React.FC = () => {
         </svg>
       </div>
 
-      <p className="conic-note">
+      <p style={{
+        textAlign: 'center',
+        fontSize: '13px',
+        opacity: 0.7,
+        margin: 0
+      }}>
         0 ≤ e &lt; 1 → ellipse, e = 1 → parabola, e &gt; 1 → hyperbola.
       </p>
     </div>

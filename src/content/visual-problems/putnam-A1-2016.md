@@ -1,5 +1,5 @@
 ---
-title: "Putnam A1 (2016)"
+title: "Putnam 2016 A1"
 description: "My handwritten exploration, Dr. Pragel’s explanation, and the reasoning behind why the smallest integer j is 8."
 pubDate: 2025-11-05
 tags: ["Putnam", "Number Theory", "Polynomials", "Divisibility"]

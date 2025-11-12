@@ -1,0 +1,64 @@
+---
+title: "Characters of a Group and What They Remember"
+description: "From traces of representations to character tables for Z₄, S₃, and D₄."
+pubDate: 2025-11-09
+tags: [algebra, representation theory, characters]
+heroImage: '/blog-placeholder-5.jpg'
+---
+
+import CharacterTableGenerator from "@components/CharacterTableGenerator.astro";
+
+In the last weeks of my Abstract Algebra 2 course, we moved from modules and group
+algebras to **representations** and finally to **characters**.
+
+The setup looks like this: we start with a finite group $G$, a complex vector space $V$,
+and a homomorphism
+$$
+\rho : G \to \mathrm{GL}(V).
+$$
+
+The **character** of this representation is the function
+$$
+\chi(g) = \mathrm{tr}(\rho(g)),
+$$
+the trace of the matrix representing $\rho(g)$ with respect to some basis of $V$.
+
+One of the beautiful facts I learned from Dr. Harmon’s notes is that:
+
+- $\chi(e) = \dim_\mathbb{C} V$, and  
+- $\chi$ is constant on conjugacy classes, so it really lives on the set of conjugacy classes of $G$.
+
+---
+
+## Character tables in action
+
+Instead of writing a static table in LaTeX, let’s play with a few small groups and
+their irreducible characters. Each row is an irreducible character, and each column
+is a conjugacy class.
+
+<CharacterTableGenerator />
+
+You can see a few important patterns immediately:
+
+- For each group, the sum of the squares of the degrees of the irreducible characters
+  equals $|G|$.
+- For abelian groups like $\mathbb{Z}_4$, all irreducible characters are 1-dimensional.
+- For non-abelian examples like $S_3$ and $D_4$, you start seeing higher-dimensional
+  representations and more interesting character values.
+
+---
+
+## How this connects back to modules
+
+Earlier in the course, we built the theory of $R$-modules and tensor products.
+In that language:
+
+- Complex representations of $G$ are the same as **$\mathbb{C}G$-modules**.
+- Simple $\mathbb{C}G$-modules correspond to the rows in the character table.
+- Maschke’s Theorem (under $\mathrm{char} \mathbb{C} \nmid |G|$) tells us that
+  every $\mathbb{C}G$-module decomposes as a direct sum of simple modules, which
+  shows up as decomposing characters into irreducibles.
+
+In future posts, I’ll go back to Dr. Harmon’s “Investigations” and unpack how
+modules, group algebras, and tensor products build up the language needed to
+even state these theorems.
