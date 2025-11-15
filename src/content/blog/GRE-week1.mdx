@@ -1,0 +1,26 @@
+---
+
+title: "Hyperbolic Rotations and Invariant Proper Time"
+description: "Interactive demo of how e changes the shape"
+pubDate: 2025-11-14
+tags: ["conics", "geometry", "visual", "eccentricity"]
+isAnimated: true
+---
+
+import HyperbolaPreservation from '@components/HyperbolaPreservation.astro';
+
+In special relativity, the quantity
+
+$$
+s^2 = t^2 - x^2
+$$
+
+is the analogue of squared distance in Euclidean space. Lorentz transformations
+preserve this “Minkowski norm”, so curves of constant $s^2$ are invariant.
+
+<HyperbolaPreservation />
+
+These hyperbolae are the sets where $t^2 - x^2$ is constant. As you change the
+rapidity $\eta$ (and therefore the velocity $v = \tanh \eta$), the primed axes
+rotate, but the hyperbolae stay fixed: the geometry of spacetime is the real
+invariant object.

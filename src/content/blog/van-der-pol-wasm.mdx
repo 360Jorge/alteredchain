@@ -1,0 +1,26 @@
+---
+title: "Van der Pol Oscillator in the Browser"
+description: "A WASM-powered phase portrait demo."
+pubDate: 2025-11-14
+tags: ["dynamics", "wasm", "visual"]
+isAnimated: true
+---
+
+import VdpDemo from '@components/VdpCanvas.astro';
+
+The Van der Pol oscillator
+
+$$
+x' = y, \qquad y' = \mu(1 - x^2)y - x
+$$
+
+is a classic nonlinear system exhibiting limit cycles.
+
+In this demo, the trajectory is computed in **Rust**, compiled to **WebAssembly**,
+and rendered in your browser using a `<canvas>`.
+
+<VdpDemo />
+
+Try refreshing and watch how the system spirals into its limit cycle. Later we
+could add sliders for $\mu$, initial conditions, and even show both time series
+and phase portrait.
