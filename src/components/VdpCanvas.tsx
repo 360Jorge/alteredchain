@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import init, { vdp_trajectory } from '../wasm/vdp/pkg/vdp_wasm'; 
+import init, { vdp_trajectory } from '../wasm/vdp/pkg/vdp_wasm.js'; 
 // adjust the path to wherever your pkg folder lives
 
 const VdpCanvas: React.FC = () => {
