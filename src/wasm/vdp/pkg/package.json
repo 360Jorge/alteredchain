@@ -1,0 +1,15 @@
+{
+  "name": "vdp-wasm",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "vdp_wasm_bg.wasm",
+    "vdp_wasm.js",
+    "vdp_wasm.d.ts"
+  ],
+  "main": "vdp_wasm.js",
+  "types": "vdp_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
