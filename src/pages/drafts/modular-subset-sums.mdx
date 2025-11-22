@@ -1,0 +1,395 @@
+---
+title: "How many subsets have sum divisible by m?"
+description: "From parity, to roots of unity, to a modular playground with m = 2, 3, 5."
+pubDate: 2025-11-21
+tags: ["combinatorics", "number theory", "roots of unity"]
+---
+
+import SubsetModPlayground from "@components/SubsetModPlayground.astro";
+
+If you pick a random subset of $\{1,2,\dots,n\}$, look at the sum of its elements, and reduce that sum modulo some $m$, what happens?
+
+- For $m = 2$, everything is *perfectly* symmetric: exactly half of all subsets have even sum.
+- For $m = 3$, the answer is still nice, but we get a **three-case formula** depending on $n \bmod 3$.
+- For $m = 5$, the symmetry really starts to care about whether $5 \mid n$.
+
+Below is a small interactive playground you can use to explore the distribution for $m = 2,3,5$ and small $n$:
+
+<SubsetModPlayground />
+
+---
+
+## 1. The game
+
+Fix a positive integer $n$, and let
+$$
+S_n = \{1,2,\dots,n\}.
+$$
+
+We look at all subsets $A \subseteq S_n$, and for each one we compute the sum
+$$
+\operatorname{sum}(A) = \sum_{a \in A} a.
+$$
+
+Given a modulus $m$, we care about the residue
+$$
+\operatorname{sum}(A) \bmod m.
+$$
+
+The question is:
+
+> How many subsets of $S_n$ have sum $\equiv r \pmod m$?  
+> In particular, how many have sum $\equiv 0 \pmod m$?
+
+Let’s start with the friendliest case.
+
+---
+
+## 2. Mod $2$: parity is perfectly symmetric
+
+We first ask: **how many subsets of $S_n$ have even sum?**
+
+Every integer is either even or odd. Modulo $2$:
+
+- an even number contributes $0$,
+- an odd number contributes $1$.
+
+So the parity of the sum depends **only** on how many odd elements we pick, not *which* ones.
+
+Let
+$$
+e = \left\lfloor \frac{n}{2} \right\rfloor, \qquad
+o = \left\lceil \frac{n}{2} \right\rceil
+$$
+be the number of even and odd integers in $S_n$, respectively.
+
+- Each of the $e$ even numbers can be either in or out of the subset, and this does *not* affect parity $\Rightarrow$ factor $2^e$.
+- Parity is fully decided by the subset of the $o$ odd numbers.
+
+Among the $o$ odd numbers:
+
+- Subsets with an **even** number of odds give an even sum.
+- Subsets with an **odd** number of odds give an odd sum.
+
+But the subsets of an $o$-element set split evenly by parity of size: exactly $2^{o-1}$ have even size, and $2^{o-1}$ have odd size.
+
+Therefore, the number of subsets with even sum is
+$$
+f_2(n) = 2^e \cdot 2^{o-1} = 2^{e+o-1} = 2^{n-1}.
+$$
+
+So we get the extremely clean fact:
+
+> For every $n$, **exactly half** of all subsets have even sum:
+> $$
+> \boxed{f_2(n) = 2^{n-1}}.
+> $$
+
+This is why, for mod $2$, you always see a $50/50$ split between even and odd sums.
+
+---
+
+## 3. Mod $3$: residues and roots of unity
+
+Now we care about sums modulo $3$. There are three residue classes:
+$$
+0,\ 1,\ 2 \pmod 3.
+$$
+
+Instead of thinking subset-by-subset, we can package everything into a generating function:
+$$
+P(x) = \prod_{k=1}^n (1 + x^k).
+$$
+
+Why this polynomial?
+
+- For each $k$, the factor $(1 + x^k)$ encodes the choice “don’t include $k$” (the $1$ term) or “include $k$” (the $x^k$ term).
+- When you expand $P(x)$, each subset $A \subseteq S_n$ contributes a monomial
+  $$
+  x^{\sum_{a\in A} a}.
+  $$
+- The coefficient of $x^t$ is exactly the number of subsets whose elements sum to $t$.
+
+To isolate the subsets with sum $\equiv 0 \pmod 3$, we use the **root-of-unity filter**.  
+Let $\omega$ be a primitive cube root of unity ($\omega^3 = 1$, $\omega \neq 1$). Then:
+$$
+f_3(n) = \#\{\text{subsets with sum } \equiv 0 \pmod 3\}
+= \frac{1}{3}\big(P(1) + P(\omega) + P(\omega^2)\big).
+$$
+
+We always have $P(1) = 2^n$. So the work is in $P(\omega)$ and $P(\omega^2)$.
+
+---
+
+### 3.1 Grouping by residues modulo $3$
+
+Each integer $k$ is congruent to $0,1,$ or $2$ mod $3$. Let
+$$
+N_r = \#\{k\in\{1,\dots,n\}: k \equiv r \pmod 3\}, \quad r=0,1,2.
+$$
+
+Then:
+$$
+P(\omega) = \prod_{k=1}^{n} (1 + \omega^{k})
+= \prod_{r=0}^{2} (1 + \omega^{r})^{N_r},
+$$
+and similarly
+$$
+P(\omega^2) = \prod_{r=0}^{2} (1 + \omega^{2r})^{N_r}.
+$$
+
+We use the standard identities for cube roots of unity:
+$$
+1 + \omega + \omega^2 = 0, \qquad \omega^3 = 1,
+$$
+and the handy product
+$$
+(1+\omega)(1+\omega^2) = 1.
+$$
+
+Now we just do a clean case split depending on $n \bmod 3$.
+
+---
+
+### 3.2 Case $n = 3m$
+
+If $n = 3m$, then each residue class $0,1,2$ appears exactly $m$ times, so $N_0 = N_1 = N_2 = m$.
+
+Then:
+$$
+P(\omega)
+= (1+1)^m (1+\omega)^m (1+\omega^2)^m
+= 2^m \cdot \big((1+\omega)(1+\omega^2)\big)^m
+= 2^m.
+$$
+
+By symmetry, $P(\omega^2) = 2^m$ as well.
+
+Thus:
+$$
+f_3(3m) = \frac{1}{3}\big(2^{3m} + 2^m + 2^m\big)
+= \boxed{\frac{2^{3m} + 2\cdot 2^m}{3}}.
+$$
+
+---
+
+### 3.3 Case $n = 3m+1$
+
+Now $1$ appears one extra time as a residue, so:
+$$
+N_1 = m+1,\quad N_0 = N_2 = m.
+$$
+
+Compute:
+$$
+P(\omega)
+= (1+1)^m (1+\omega)^{m+1} (1+\omega^2)^m
+= 2^m (1+\omega)^{m+1} (1+\omega^2)^m.
+$$
+
+Using $(1+\omega)(1+\omega^2)=1 \Rightarrow (1+\omega^2)^m = (1+\omega)^{-m}$, we get:
+$$
+P(\omega) = 2^m (1+\omega).
+$$
+
+Similarly,
+$$
+P(\omega^2) = 2^m (1+\omega^2).
+$$
+
+Then:
+$$
+P(\omega) + P(\omega^2)
+= 2^m\big( (1+\omega) + (1+\omega^2) \big)
+= 2^m (2 + \omega + \omega^2)
+= 2^m (2 - 1) = 2^m,
+$$
+because $1 + \omega + \omega^2 = 0$.
+
+So:
+$$
+f_3(3m+1)
+= \frac{1}{3}\big(2^{3m+1} + 2^m\big)
+= \boxed{\frac{2^{3m+1} + 2^m}{3}}.
+$$
+
+---
+
+### 3.4 Case $n = 3m+2$
+
+Now residues $1$ and $2$ both appear one extra time:
+$$
+N_1 = N_2 = m+1,\quad N_0 = m.
+$$
+
+Then:
+$$
+P(\omega)
+= (1+1)^m (1+\omega)^{m+1}(1+\omega^2)^{m+1}
+= 2^m \cdot \big((1+\omega)(1+\omega^2)\big)^{m+1}
+= 2^m,
+$$
+and the same for $P(\omega^2)$.
+
+Thus:
+$$
+f_3(3m+2)
+= \frac{1}{3}\big(2^{3m+2} + 2\cdot 2^m\big)
+= \boxed{\frac{2^{3m+2} + 2^{m+1}}{3}}.
+$$
+
+---
+
+### 3.5 Summary for mod $3$
+
+For $n = 3m, 3m+1, 3m+2$:
+$$
+f_3(n) =
+\begin{cases}
+\dfrac{2^{3m} + 2\cdot 2^m}{3}, & n = 3m, \\[6pt]
+\dfrac{2^{3m+1} + 2^m}{3}, & n = 3m+1, \\[6pt]
+\dfrac{2^{3m+2} + 2^{m+1}}{3}, & n = 3m+2.
+\end{cases}
+$$
+
+Compared to mod $2$, this is more structured, but still pleasantly explicit.
+
+---
+
+## 4. Mod $5$: why $n = 2000$ is such a nice case
+
+Now let’s jump to modulus $5$ and the classic problem:
+
+> **Problem.** Find the number of subsets of $\{1,2,\dots,2000\}$ whose sum is divisible by $5$.
+
+We use the same generating function:
+$$
+P(x) = \prod_{k=1}^{2000} (1 + x^k).
+$$
+
+Let $\zeta$ be a primitive $5$th root of unity. The root-of-unity filter now says:
+$$
+f_5(2000) = \frac{1}{5}\big(P(1) + P(\zeta) + P(\zeta^2) + P(\zeta^3) + P(\zeta^4)\big).
+$$
+
+We know $P(1) = 2^{2000}$. The magic is in the structure of $P(\zeta^j)$ for $j=1,2,3,4$.
+
+---
+
+### 4.1 Grouping by residues modulo $5$
+
+Write $k = 5q + r$ with $r \in \{0,1,2,3,4\}$. Among $\{1,\dots,2000\}$:
+
+- each residue class $r$ appears exactly $400$ times, because $2000 = 5\cdot 400$.
+
+So:
+$$
+P(\zeta^j)
+= \prod_{k=1}^{2000} (1 + \zeta^{j k})
+= \prod_{r=0}^4 \prod_{\substack{1\le k\le 2000 \\ k\equiv r \,(\bmod 5)}} (1 + \zeta^{j k}).
+$$
+
+If $k \equiv r \pmod 5$, then $k = 5q + r$ and
+$$
+\zeta^{j k} = \zeta^{j(5q+r)} = (\zeta^{5})^{jq} \zeta^{jr} = \zeta^{jr}.
+$$
+
+So all terms in the same residue class give the same factor, repeated $400$ times:
+$$
+\prod_{\substack{1\le k\le 2000 \\ k\equiv r \,(\bmod 5)}}
+(1 + \zeta^{j k})
+= (1 + \zeta^{j r})^{400}.
+$$
+
+Hence:
+$$
+P(\zeta^j) = \prod_{r=0}^4 (1 + \zeta^{jr})^{400}.
+$$
+
+If $j$ is coprime to $5$, the map $r \mapsto jr \pmod 5$ is a permutation of $\{0,1,2,3,4\}$, which means:
+$$
+\prod_{r=0}^4 (1 + \zeta^{jr})
+= \prod_{r=0}^4 (1 + \zeta^{r})
+$$
+is the same for all $j=1,2,3,4$.
+
+Call this common product
+$$
+A = \prod_{r=0}^4 (1 + \zeta^r).
+$$
+
+Then:
+$$
+P(\zeta^j) = A^{400} \quad \text{for } j=1,2,3,4.
+$$
+
+So we “just” need $A$.
+
+---
+
+### 4.2 Computing $A = \prod_{r=0}^4 (1 + \zeta^r)$
+
+The five $5$th roots of unity $1,\zeta,\zeta^2,\zeta^3,\zeta^4$ are the roots of $x^5 - 1$.  
+The four nontrivial ones $\zeta,\dots,\zeta^4$ are roots of
+$$
+g(x) = x^4 + x^3 + x^2 + x + 1.
+$$
+
+Then $g(-x)$ has roots $-\zeta, -\zeta^2, -\zeta^3, -\zeta^4$:
+$$
+g(-x) = x^4 - x^3 + x^2 - x + 1 = (x + \zeta)(x + \zeta^2)(x + \zeta^3)(x + \zeta^4).
+$$
+
+Evaluate at $x=1$:
+$$
+g(-1) = 1 - 1 + 1 - 1 + 1 = 1 = (1+\zeta)(1+\zeta^2)(1+\zeta^3)(1+\zeta^4).
+$$
+
+So:
+$$
+A = (1 + 1)\,(1+\zeta)(1+\zeta^2)(1+\zeta^3)(1+\zeta^4)
+= 2 \cdot g(-1) = 2.
+$$
+
+Thus:
+$$
+P(1) = 2^{2000}, \qquad
+P(\zeta) = P(\zeta^2) = P(\zeta^3) = P(\zeta^4) = 2^{400}.
+$$
+
+Plug into the filter:
+$$
+f_5(2000)
+= \frac{1}{5}\big(2^{2000} + 4\cdot 2^{400}\big).
+$$
+
+More generally, for $n = 5m$ we get the clean formula:
+$$
+\boxed{
+f_5(5m) = \frac{2^{5m} + 4\cdot 2^{m}}{5}.
+}
+$$
+
+For $n$ **not** divisible by $5$, the residue classes no longer appear equally often, the symmetry between $\zeta, \zeta^2, \zeta^3, \zeta^4$ breaks, and the expression for $f_5(n)$ becomes more complicated.
+
+---
+
+## 5. What the playground shows
+
+The interactive component above lets you:
+
+- fix a modulus $m \in \{2,3,5\}$,
+- choose a small $n$,
+- and see, by brute force, how many subsets of $S_n$ have sum in each residue class mod $m$.
+
+You should see patterns like:
+
+- For $m=2$, the counts are always exactly half-even, half-odd: the proof was purely combinatorial.
+- For $m=3$, the triple $(\#\equiv 0, \#\equiv 1, \#\equiv 2)$ follows the piecewise formulas above as $n$ grows.
+- For $m=5$, the distribution behaves nicely whenever $5 \mid n$, and is more skewed otherwise.
+
+Behind the scenes, all of this is really the representation theory of cyclic groups showing up in a very down-to-earth combinatorics problem.
+
+And you don’t have to know any representation theory to enjoy the patterns.
+
+Just pick a modulus, move the slider, and watch the residues rearrange themselves.
