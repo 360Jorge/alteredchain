@@ -1,0 +1,194 @@
+---
+title: "What is a group representation, really?"
+description: "From symmetries of a triangle to matrices acting on vectors."
+pubDate: 2025-11-22
+tags: ["representation theory", "algebra", "linear algebra"]
+---
+
+When I first heard “representation theory”, it sounded like some mysterious higher algebra subject:
+
+> “We study representations of groups on vector spaces via modules over group algebras…”
+
+Cool. But also: what?
+
+In this post I want to describe **what a representation actually *is*** in the most concrete way I can, using only:
+
+- basic group ideas (like symmetries), and  
+- linear algebra (matrices acting on vectors).
+
+Later, we’ll climb to characters and character tables. But here, the only goal is:
+
+> A representation is just a way to let a group act by linear transformations on a vector space.
+
+---
+
+## 1. Symmetries you already know
+
+Take an equilateral triangle with vertices labeled $1,2,3$.
+
+There are 6 symmetries:
+
+- the identity (do nothing),
+- two rotations (by $120^\circ$ and $240^\circ$),
+- three reflections.
+
+Under each symmetry, the vertices get permuted. For example:
+
+- a $120^\circ$ rotation sends $1\to2$, $2\to3$, $3\to1$,
+- a reflection across a height might swap $2$ and $3$ and fix $1$.
+
+All these symmetries form a group called $D_3$ or $S_3$ (the symmetric group on 3 letters).
+
+What matters: **each group element tells you how to shuffle the vertices.**
+
+---
+
+## 2. Turning symmetries into matrices
+
+Now look at the vector space
+$$
+V = \mathbb{R}^3
+$$
+with basis vectors $e_1, e_2, e_3$ corresponding to the vertices $1,2,3$.
+
+Think of a vector
+$$
+v = a\,e_1 + b\,e_2 + c\,e_3
+$$
+as assigning weights $(a,b,c)$ to the 3 vertices.
+
+A symmetry of the triangle permutes the vertices. So it should also permute the coordinates of any vector.
+
+For example, the $120^\circ$ rotation that sends $1\to2$, $2\to3$, $3\to1$ should send
+$$
+e_1 \mapsto e_2,\quad
+e_2 \mapsto e_3,\quad
+e_3 \mapsto e_1.
+$$
+
+As a matrix (acting on column vectors in the basis $e_1,e_2,e_3$), that rotation is
+$$
+R =
+\begin{pmatrix}
+0 & 0 & 1 \\
+1 & 0 & 0 \\
+0 & 1 & 0
+\end{pmatrix}.
+$$
+
+Because:
+- the first column is the image of $e_1$ written in the basis (here $e_1\mapsto e_2$),
+- the second column is the image of $e_2$,
+- the third is the image of $e_3$.
+
+The identity symmetry corresponds to the identity matrix $I_3$.  
+Every symmetry of the triangle can be turned into a $3\times3$ matrix this way.
+
+So from the group of symmetries $S_3$ we’ve built a map
+$$
+\rho : S_3 \longrightarrow \mathrm{GL}_3(\mathbb{R})
+$$
+that sends each symmetry to the corresponding permutation matrix.
+
+This map $\rho$ is **a group representation.**
+
+---
+
+## 3. What a representation really is
+
+Formally:
+
+> A **representation** of a group $G$ on a vector space $V$ is a homomorphism
+> $$
+> \rho: G \to \mathrm{GL}(V),
+> $$
+> where $\mathrm{GL}(V)$ is the group of invertible linear maps $V \to V$.
+
+This is really just a fancy way of saying:
+
+> To each group element $g \in G$ we assign an invertible linear transformation
+> $$
+> \rho(g): V \to V
+> $$
+> in such a way that
+> $$
+> \rho(gh) = \rho(g)\,\rho(h) \quad\text{and}\quad \rho(e) = \mathrm{Id}_V.
+> $$
+
+In the triangle example:
+
+- $G = S_3$,
+- $V = \mathbb{R}^3$,
+- $\rho(g)$ is “permute the coordinates according to the symmetry $g$”.
+
+The key point: **the group now acts linearly on vectors**.
+
+Instead of just thinking “$g$ shuffles vertices”, we can think “$g$ is a matrix.”
+
+---
+
+## 4. Why do we care about linear actions?
+
+Groups on their own can be pretty abstract. But linear algebra is something we know how to work with:
+
+- we can take eigenvalues and eigenvectors,
+- we can compute traces and determinants,
+- we can decompose a space into invariant subspaces.
+
+Representation theory says:
+
+> Study a group by looking at all the ways it can act linearly on vector spaces.
+
+The wild thing is that for many finite groups, **a small list of building-block representations** (the irreducible ones) already captures a huge amount of information about the group.
+
+Later posts will introduce:
+
+- **characters** $\chi(g) = \operatorname{trace}(\rho(g))$, which compress a whole matrix down to one number that still remembers a lot of structure,
+- **character tables**, which are like “fingerprints” of a group, especially useful in finite groups and chemistry/physics.
+
+---
+
+## 5. Another simple example: rotations of the plane
+
+Take the group
+$$
+C_n = \{ \text{rotations of the plane by } 0, \tfrac{2\pi}{n}, \dots, \tfrac{2\pi(n-1)}{n} \}.
+$$
+
+This group already *is* a group of linear transformations of $\mathbb{R}^2$:
+each rotation is a $2\times2$ matrix
+$$
+R_k =
+\begin{pmatrix}
+\cos(2\pi k/n) & -\sin(2\pi k/n) \\
+\sin(2\pi k/n) & \cos(2\pi k/n)
+\end{pmatrix}.
+$$
+
+So here:
+
+- $G = C_n$,
+- $V = \mathbb{R}^2$,
+- $\rho(k) = R_k$ is a representation.
+
+In fact, $C_n$ has many more representations (for example on $\mathbb{C}$ by multiplication by complex roots of unity), and those will show up naturally when we talk about characters.
+
+But the takeaway is:
+
+> Any time a group acts by symmetries of a geometric object, you usually get a representation “for free” on some vector space of coordinates.
+
+---
+
+## 6. Where this is going
+
+In the next posts, I want to:
+
+1. **Define characters** $\chi(g) = \operatorname{trace}(\rho(g))$ and explain why the trace is the right “summary” of a matrix.
+2. Build **the character table of $S_3$** from scratch.
+3. Talk a bit about **orthogonality of characters** and how it lets you decode a lot of structure.
+
+If you want a more traditional, theorem-heavy approach, you can check out the lecture notes from my Abstract Algebra II course with Dr. Harmon — they follow the standard path (representations, characters, orthogonality, examples) but in a very clean, structured way.
+
+
+> **Further reading:**  
+> My course notes from Abstract Algebra II (Dr. Harmon): [PDF link here]

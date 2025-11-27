@@ -1,0 +1,235 @@
+---
+title: "Building the character table of S₃ (by hand!)"
+description: "The first character table you can build from scratch"
+pubDate: 2025-11-23
+tags: ["representation theory", "algebra", "character theory"]
+---
+
+This is the moment where character theory becomes *real*.
+
+We’re going to build the **entire character table of $S_3$** using only:
+
+- the idea that a character measures “how much stays in place”,
+- the fact that characters are constant on conjugacy classes,
+- and one magical rule: orthogonality.
+
+No advanced theorems needed.
+
+---
+
+## 1. The group $S_3$
+
+$S_3$ is the group of all permutations of three objects.
+
+It has:
+
+- $6$ elements
+- $3$ conjugacy classes:
+
+| cycle type | example | size |
+|---|---:|---:|
+| identity | $(1)$ | $1$ |
+| transpositions | $(12)$ | $3$ |
+| 3-cycles | $(123)$ | $2$ |
+
+Characters will only depend on these three types.
+
+---
+
+## 2. How many irreducible representations?
+
+This fact is deep, but we’ll *use* it without proof:
+
+> The number of irreducible representations of a finite group  
+> equals the number of conjugacy classes.
+
+Since $S_3$ has **3 conjugacy classes**, it must have **3 irreducible representations**.
+
+So our character table will have:
+
+- 3 rows (irreps)
+- 3 columns (conjugacy classes)
+
+Already very structured.
+
+---
+
+## 3. The trivial representation
+
+Every group has one:
+
+$$
+\rho_{\text{triv}}(g) = 1
+$$
+
+for all $g$.
+
+So the character is:
+
+$$
+\chi_{\text{triv}}(g) = 1.
+$$
+
+Row 1:
+
+| class | $e$ | transpositions | 3-cycles |
+|---|---:|---:|---:|
+| $\chi_{\text{triv}}$ | 1 | 1 | 1 |
+
+---
+
+## 4. The sign representation
+
+Permutations are:
+
+- even → sign $+1$
+- odd → sign $-1$
+
+Transpositions are odd.  
+3-cycles are even.
+
+So:
+
+| class | $e$ | transpositions | 3-cycles |
+|---|---:|---:|---:|
+| $\chi_{\text{sgn}}$ | $1$ | $-1$ | $1$ |
+
+This gives row 2.
+
+---
+
+## 5. We need one more representation
+
+We know there must be a 3rd irreducible representation.
+
+Where do we get it?
+
+From the geometric representation from Post 1:
+
+> $S_3$ acts on $\mathbb{R}^3$ by permuting coordinates.
+
+Its character values were:
+
+- identity fixes 3 directions → trace $3$
+- a transposition fixes 1 direction → trace $1$
+- a $120^\circ$ rotation fixes nothing → trace $0$
+
+So the character is:
+
+| class | $e$ | transpositions | 3-cycles |
+|---|---:|---:|---:|
+| $\chi_{\text{perm}}$ | $3$ | $1$ | $0$ |
+
+---
+
+## 6. But this representation is NOT irreducible
+
+We can see this because it has:
+
+$$
+\langle \chi_{\text{perm}}, \chi_{\text{triv}} \rangle \neq 0
+$$
+
+which means it contains a trivial piece.
+
+Geometrically:
+
+- the vector $(1,1,1)$ is fixed by all permutations
+- so there is a 1-dimensional invariant subspace
+
+This means:
+
+> the permutation representation splits into:
+>
+> trivial representation + a 2-dimensional irreducible representation
+
+So:
+
+$$
+\chi_{\text{perm}} = \chi_{\text{triv}} + \chi_{\text{std}}
+$$
+
+Thus:
+
+$$
+\chi_{\text{std}} = \chi_{\text{perm}} - \chi_{\text{triv}}
+$$
+
+Compute it:
+
+| class | $e$ | transpositions | 3-cycles |
+|---|---:|---:|---:|
+| $\chi_{\text{std}}$ | $3-1=2$ | $1-1=0$ | $0-1=-1$ |
+
+This is the famous **standard representation** of $S_3$.
+
+---
+
+## 7. The full character table
+
+Now we have all three irreducible characters:
+
+| irreducible | $e$ | transpositions | 3-cycles |
+|---|---:|---:|---:|
+| $\chi_{\text{triv}}$ | $1$ | $1$ | $1$ |
+| $\chi_{\text{sgn}}$ | $1$ | $-1$ | $1$ |
+| $\chi_{\text{std}}$ | $2$ | $0$ | $-1$ |
+
+This is the **character table of $S_3$**.
+
+---
+
+## 8. The magical check: orthogonality
+
+Characters satisfy:
+
+$$
+\langle \chi_i, \chi_j \rangle
+= \frac{1}{|S_3|}
+\sum_{\text{classes}} |C|\, \chi_i(C)\overline{\chi_j(C)}
+$$
+
+Plug in the table:
+
+- rows are orthogonal
+- norms are 1
+
+This confirms:
+
+- we found all irreps  
+- nothing is missing  
+- nothing is duplicated
+
+---
+
+## 9. Why this is beautiful
+
+We went from:
+
+- 6 group elements
+- acting by $3\times3$ matrices
+
+to:
+
+- 3 numbers per representation
+
+and yet we kept all the essential structure.
+
+Characters compress symmetry incredibly efficiently.
+
+This is why chemists, physicists, and mathematicians love character tables.
+
+---
+
+## 10. Where we go next
+
+Now that we have one full character table, we can:
+
+- build the character table of $C_n$
+- generalize to $S_n$
+- talk about orthogonality more deeply
+- connect to representation theory research (GVZ groups, o-basis groups)
+
+Next post:
+
+> **How orthogonality lets you decompose any representation.**

@@ -1,0 +1,228 @@
+---
+title: "What is a character? (The shadow of a representation)"
+description: "Why traces secretly measure symmetry"
+pubDate: 2025-11-23
+tags: ["representation theory", "algebra", "linear algebra"]
+---
+
+In the first post we said:
+
+> A representation of a group $G$ is a homomorphism $\rho: G \to \mathrm{GL}(V)$.
+
+That means every group element acts as an invertible linear transformation on a vector space.
+
+But matrices can be annoying to work with.  
+What if we could compress each matrix into **one number** that still remembers a lot about the action?
+
+That number is the **character**.
+
+---
+
+## 1. The idea
+
+Given a representation $\rho$, we define its **character**:
+
+$$
+\chi(g) = \operatorname{trace}(\rho(g)).
+$$
+
+So instead of attaching a whole matrix to $g$, we attach just one number.
+
+At first this feels random:
+
+> Why the trace? Why not determinant? Or rank? Or the $(1,1)$ entry?
+
+But the trace turns out to measure something very geometric:
+
+> $\chi(g)$ tells you **how much of the vector space survives** the action of $g$.
+
+---
+
+## 2. Warm-up intuition: fixing vectors
+
+Think about a linear map $T: V \to V$ and a basis where $T$ is diagonal:
+
+$$
+T =
+\begin{pmatrix}
+\lambda_1 & 0 & \cdots & 0 \\
+0 & \lambda_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \lambda_n
+\end{pmatrix}.
+$$
+
+Then:
+
+$$
+\operatorname{trace}(T) = \lambda_1 + \lambda_2 + \dots + \lambda_n.
+$$
+
+If $\lambda_i = 1$, that direction is **fixed** by $T$.
+
+If $\lambda_i = -1$, that direction is **flipped**.
+
+If $\lambda_i$ is a complex root of unity, that direction is being **rotated**.
+
+So:
+
+> The trace counts fixed directions, weighting them by how they transform.
+
+If $T$ fixes $k$ independent directions and messes up the rest, the trace will often be close to $k$.
+
+This is the seed of the idea:
+
+> trace ≈ "how much stays in place"
+
+---
+
+## 3. Example: rotation of the plane
+
+Let $R_\theta$ be rotation in $\mathbb{R}^2$ by angle $\theta$:
+
+$$
+R_\theta =
+\begin{pmatrix}
+\cos\theta & -\sin\theta \\
+\sin\theta & \cos\theta
+\end{pmatrix}
+$$
+
+Its trace is:
+
+$$
+\chi(R_\theta) = 2\cos\theta.
+$$
+
+Interpretation:
+
+- if $\theta = 0$, everything is fixed → $\chi = 2$
+- if $\theta = \pi$, everything flips → $\chi = -2$
+- if $\theta = 2\pi/3$, nothing stays in place → $\chi = -1$
+
+The trace is literally “how much the rotation leaves unchanged.”
+
+---
+
+## 4. Example: the triangle representation from Post 1
+
+Recall the representation of $S_3$ on $\mathbb{R}^3$ that permutes coordinates.
+
+- identity:
+
+$$
+I =
+\begin{pmatrix}
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{pmatrix}
+\qquad
+\chi(e)=3
+$$
+
+Everything stays where it is → trace $3$.
+
+- a transposition $(2 3)$:
+
+$$
+\begin{pmatrix}
+1&0&0\\
+0&0&1\\
+0&1&0
+\end{pmatrix}
+\qquad \chi = 1
+$$
+
+Vertex $1$ stays fixed, vertices $2$ and $3$ swap.  
+So “one direction survives.”
+
+- a $120^\circ$ rotation $(123)$:
+
+$$
+\begin{pmatrix}
+0&0&1\\
+1&0&0\\
+0&1&0
+\end{pmatrix}
+\qquad \chi = 0
+$$
+
+Nothing stays put → trace $0$.
+
+This perfectly matches the geometric intuition.
+
+---
+
+## 5. The first magical fact
+
+Characters have a stunning property:
+
+> Characters are constant on conjugacy classes.
+
+Meaning:
+
+If $hgh^{-1}$ is a conjugate of $g$, then
+
+$$
+\chi(hgh^{-1}) = \chi(g).
+$$
+
+Why?
+
+Because:
+
+$$
+\rho(hgh^{-1}) = \rho(h)\rho(g)\rho(h)^{-1}
+$$
+
+and trace doesn’t change under similarity:
+
+$$
+\operatorname{trace}(PAP^{-1}) = \operatorname{trace}(A).
+$$
+
+So the character depends only on the **cycle structure** (in the case of $S_n$) or the symmetry type geometrically.
+
+This already explains why character tables are organized by conjugacy classes.
+
+---
+
+## 6. Why this matters
+
+Instead of:
+
+- 6 matrices for $S_3$,
+- each $3\times3$,
+- $54$ numbers total,
+
+we can work with:
+
+- 3 conjugacy classes,
+- 3 character values.
+
+The character compresses the representation massively while **keeping the important information**.
+
+This is why people sometimes say:
+
+> A character is the “shadow” of a representation.
+
+---
+
+## 7. Where we’re going next
+
+In the next post we’ll do something hands-on:
+
+> build the entire character table of $S_3$ from scratch.
+
+We will see:
+
+- all irreducible representations of $S_3$
+- how orthogonality of characters appears
+- why the table looks the way it does
+
+And after that, we’ll connect to:
+
+- inner products of characters
+- decomposing representations
+- and eventually: my research notes on GVZ groups and o-basis groups 

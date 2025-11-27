@@ -1,0 +1,158 @@
+---
+title: "How Dustin Used Algebra to Discover the Upside Down’s Circular Wall"
+pubDate: 2025-03-06
+description: "Stranger Things meets geometry: how three measurements and perpendicular bisectors reveal a circular boundary around the Upside Down."
+tags: ["math", "geometry", "physics", "pop-culture", "inverse problems"]
+heroImage: '/stranger-things.png'
+---
+
+import DustinCircleConstruction from '@components/DustinCircleConstruction'
+
+In Season 5, Episode 4 of *Stranger Things*, Dustin does something that looks like TV magic:  
+he places **three marks** on a map, draws a few lines, and suddenly realizes the Upside Down is surrounded by a **perfect circle** — and that he and the gang are **outside** of it.
+
+It feels dramatic, but the method he uses is both mathematically valid and remarkably elegant.
+
+This is one of the rare moments where Stranger Things leans *directly* into real geometry.
+
+---
+
+# The Scene: A Strange Frequency From the Wall
+
+Here’s the key dialogue that reveals what Dustin is actually doing:
+
+> **Dustin:** “My telemetry tracker picked up a weird frequency coming from the wall,  
+> and it took me a bit to place, but I’ve heard it before. Rather, **we** have.  
+> Remember when we were out looking for Hop, and you heard that sound off Irwin Road?”  
+>   
+> **Jonathan:** “Yeah. You said it was an interference.”  
+>   
+> **Dustin:** “It was.  
+> But this interference, it wasn’t coming from a military broadcast or EMI.  
+> It was coming from this wall — which is important, because that gives us **three known locations**.  
+> So, I connected the dots, measured the midpoints,  
+> drew the **perpendicular bisectors**—”
+
+This moment is everything.
+
+Dustin literally describes the classical geometric construction for finding the circle determined by three points.
+
+Let’s unpack it.
+
+---
+
+# Three Points Are Enough to Determine a Circle
+
+A fundamental theorem of Euclidean geometry states:
+
+> **Any three non-collinear points determine a unique circle.**
+
+If the three “weird frequency” detections are points  
+$A$, $B$, and $C$ on the boundary of the Upside Down wall,  
+then the circle containing them is called the **circumcircle**.
+
+To find it, Dustin uses the standard geometric construction:
+
+1. Connect $A$–$B$ and $B$–$C$ to form a triangle.  
+2. Find the **midpoints** of those two segments.  
+3. Draw the **perpendicular bisector** of each segment.  
+4. The bisectors intersect at a single point:  
+   the **circumcenter**, which is the center $(h,k)$ of the circle.  
+5. Measure the distance from $(h,k)$ to any of the three points to get the radius $R$.
+
+Formally, the circumcenter $(h,k)$ satisfies:
+
+$$
+(h - x_1)^2 + (k - y_1)^2
+= (h - x_2)^2 + (k - y_2)^2
+= (h - x_3)^2 + (k - y_3)^2.
+$$
+
+And the radius is:
+
+$$
+R = \sqrt{(x_1 - h)^2 + (y_1 - k)^2}.
+$$
+
+These equations ensure that all three points lie on the same circle.
+
+Dustin didn’t need to walk the entire perimeter —  
+**three contact points are enough**.
+
+---
+
+# What Dustin’s Construction Means Physically
+
+Each time the telemetry tracker picked up interference,  
+it meant they were **exactly $R$ units away from the circular boundary** at that moment.
+
+Those three detections correspond to **three boundary points**.
+
+Once he places them on the map, connecting the dots and constructing the perpendicular bisectors gives him:
+
+- the shape of the wall (a circle)
+- the exact center of the Upside Down boundary
+- the radius
+- and — most importantly — their relation to it
+
+<DustinCircleConstruction client:load />
+
+He realizes instantly:
+
+> **They are outside the circle.  
+> And if you are outside a circle, every direction eventually intersects it.**
+
+This is why he concludes:
+
+- there’s no “gap”  
+- no open side  
+- no way to walk around  
+- the wall completely encloses the Upside Down  
+
+They are outside a closed curve.
+
+---
+
+# A Real Scientific Technique (Not Sci-Fi)
+
+What Dustin is doing mirrors how scientists determine shapes they can’t physically explore:
+
+- **GPS trilateration**  
+- **Earthquake epicenter location**  
+- **Mapping volcanic calderas**  
+- **Seismic void detection**  
+- **Astronomical orbit determination**  
+- **CT scan inverse reconstruction**  
+
+In all these cases:
+
+> **A few local measurements reveal a global structure.**
+
+Dustin uses three frequency detections to reconstruct an entire boundary.
+
+The Upside Down’s wall is enormous — but the math does the walking for him.
+
+---
+
+# Why This Moment Is Beautiful
+
+Stranger Things is full of the supernatural, but this scene is pure mathematics:
+
+- connecting three known points  
+- constructing perpendicular bisectors  
+- finding the circumcenter  
+- revealing a circular barrier  
+- and understanding its consequences
+
+It shows a simple but deep truth:
+
+> **With the right math, you don’t need to explore the whole world to understand its shape.**  
+> Sometimes three points are enough.
+
+Three strange frequencies.  
+One circle.  
+No way around.
+
+The algebra solves the mystery long before the characters do.
+
+

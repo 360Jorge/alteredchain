@@ -1,0 +1,239 @@
+---
+title: "How orthogonality lets you decompose any representation"
+description: "The inner product that turns characters into a decomposition machine"
+pubDate: 2025-11-23
+tags: ["representation theory", "algebra", "character theory"]
+---
+
+So far:
+
+- we know what a representation is,
+- we understand characters as “how much survives,”
+- and we built the full character table of $S_3$ by hand.
+
+Now comes one of the most powerful ideas in representation theory:
+
+> **Characters are orthogonal, and that lets us decompose any representation into irreducibles.**
+
+This post is almost magical because:
+
+- we will never write a matrix,
+- we will never change bases,
+- and yet we will break a representation apart perfectly.
+
+---
+
+## 1. The inner product of characters
+
+Given two characters $\chi$ and $\psi$ of a finite group $G$, define:
+
+$$
+\langle \chi, \psi \rangle
+= \frac{1}{|G|}
+\sum_{g \in G} \chi(g)\,\overline{\psi(g)}.
+$$
+
+This looks random, but it behaves like an inner product.
+
+Since characters are constant on conjugacy classes, we can rewrite it as:
+
+$$
+\langle \chi, \psi \rangle
+= \frac{1}{|G|}
+\sum_{\text{classes } C} |C|\, \chi(C)\,\overline{\psi(C)}.
+$$
+
+That version is the one we actually compute.
+
+---
+
+## 2. The magical theorem (no proof for now)
+
+> If $\chi_1,\dots,\chi_k$ are the irreducible characters of $G$, then:
+>
+> $$
+> \langle \chi_i, \chi_j \rangle = 
+> \begin{cases}
+> 1 & i=j\\
+> 0 & i\ne j
+> \end{cases}
+> $$
+
+This is the **orthogonality of characters**.
+
+Interpretation:
+
+- irreducible characters behave like an orthonormal basis
+- every character “points in a different direction”
+
+This is wild:
+
+Characters live in $\mathbb{C}^k$ (one value per conjugacy class), and irreducible characters form an orthonormal basis of that space.
+
+---
+
+## 3. Why this matters
+
+Let $\chi$ be the character of *any* representation.
+
+Then we can write:
+
+$$
+\chi = m_1\chi_1 + m_2\chi_2 + \dots + m_k \chi_k
+$$
+
+where:
+
+- $\chi_i$ are irreducible characters
+- $m_i$ are nonnegative integers
+
+And the miracle is:
+
+$$
+m_i = \langle \chi, \chi_i \rangle.
+$$
+
+That one formula lets us:
+
+✅ detect whether a representation is irreducible  
+✅ compute how many copies of each irreducible appear  
+✅ decompose representations effortlessly
+
+No matrices required.
+
+---
+
+## 4. Example: decomposing the permutation representation of $S_3$
+
+From the previous post, the permutation character was:
+
+| class | $e$ | transpositions | 3-cycles |
+|---|---:|---:|---:|
+| $\chi_{\text{perm}}$ | $3$ | $1$ | $0$ |
+
+And the irreducible characters were:
+
+| irreducible | $e$ | transpositions | 3-cycles |
+|---|---:|---:|---:|
+| $\chi_{\text{triv}}$ | $1$ | $1$ | $1$ |
+| $\chi_{\text{sgn}}$ | $1$ | $-1$ | $1$ |
+| $\chi_{\text{std}}$ | $2$ | $0$ | $-1$ |
+
+We now compute:
+
+$$
+m_{\text{triv}} = \langle \chi_{\text{perm}}, \chi_{\text{triv}} \rangle
+$$
+
+Use:
+
+- $|S_3| = 6$
+- conjugacy class sizes $(1,3,2)$
+
+Compute:
+
+$$
+\frac{1}{6}\big(1\cdot 3\cdot 1 + 3\cdot 1\cdot 1 + 2\cdot 0\cdot 1\big)
+= \frac{6}{6} = 1
+$$
+
+So the trivial representation appears once.
+
+---
+
+Next:
+
+$$
+m_{\text{sgn}} = \langle \chi_{\text{perm}}, \chi_{\text{sgn}} \rangle
+$$
+
+Compute:
+
+$$
+\frac{1}{6}\big(1\cdot 3\cdot 1 + 3\cdot 1\cdot (-1) + 2\cdot 0\cdot 1\big)
+= \frac{0}{6} = 0
+$$
+
+So the sign representation does *not* appear.
+
+---
+
+Finally:
+
+$$
+m_{\text{std}} = \langle \chi_{\text{perm}}, \chi_{\text{std}} \rangle
+$$
+
+Compute:
+
+$$
+\frac{1}{6}\big(1\cdot 3\cdot 2 + 3\cdot 1\cdot 0 + 2\cdot 0\cdot (-1)\big)
+= \frac{6}{6} = 1
+$$
+
+So:
+
+> $\chi_{\text{perm}} = \chi_{\text{triv}} + \chi_{\text{std}}$
+
+which matches what we saw geometrically.
+
+---
+
+## 5. This is HUGE
+
+With a tiny computation, we learned:
+
+- the permutation representation splits
+- it contains exactly one copy of the trivial rep
+- and exactly one copy of the standard rep
+- nothing else
+
+We didn't:
+
+- diagonalize a matrix
+- find invariant subspaces manually
+- write a change of basis
+- compute an eigenvector
+
+All the decomposition information was already encoded in the character.
+
+---
+
+## 6. Why orthogonality is a superpower
+
+Orthogonality turns the space of characters into:
+
+> a vector space with an orthonormal basis given by irreducibles
+
+That means:
+
+- every representation is a linear combination of irreps
+- coefficients are easy to compute
+- decomposition is unique
+- multiplicities are integers automatically
+
+This is one of the reasons representation theory is so powerful in:
+
+- chemistry (molecular vibration modes)
+- physics (quantum states and symmetry)
+- number theory (Galois representations)
+- combinatorics (group actions)
+
+---
+
+## 7. Where we're going next
+
+Now that we have the decomposition tool, we can:
+
+-  decompose representations of $C_n$
+-  build character tables of other groups
+-  connect to Fourier analysis
+-  relate to your research notes
+
+Next post:
+
+> How orthogonality *is* Fourier analysis on finite groups.
+
+Yes — the character table of a finite abelian group *is literally* a Fourier basis.
+
+Mind-blowing stuff ahead.

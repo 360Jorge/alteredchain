@@ -154,7 +154,7 @@ In short, it’s how mathematicians and physicists make sense of *almost solvabl
 
 If you enjoyed this introduction, check out the follow-up post:
 
-[**From Pendulums to Planets: How Perturbation Theory Explains Perihelion Precession**](/blog/Perihelion-Precession)
+[**From Pendulums to Planets: How Perturbation Theory Explains Perihelion Precession**](https://www.alteredchain.com/blog/perihelion-precession/)
 
 In that post, we take these same ideas and apply them to **planetary motion**, showing how tiny relativistic corrections in the equations of gravity explain the slow rotation of Mercury’s orbit — one of the most beautiful triumphs of both mathematics and physics.
 
