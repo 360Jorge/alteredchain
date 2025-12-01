@@ -3,8 +3,6 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import MathCapsule from '../components/MathCapsule.jsx';
-import MathJaxLoader from '../components/MathJaxLoader.tsx';
 ---
 
 <!doctype html>
@@ -35,21 +33,57 @@ import MathJaxLoader from '../components/MathJaxLoader.tsx';
         the evolving landscape of mathematical and scientific discovery.
       </p>
 
-      <p>
-        I'm also fascinated by <strong>problem-solving itself</strong> — how a clever trick
-        or a small shift in perspective can make a tough problem unfold. Here’s
-        one of the problem-solving principles I keep in mind:
-      </p>
-
-      <!-- interactive island here -->
-      <MathJaxLoader client:load />
-      <MathCapsule client:load />
+      <h2>Where to start</h2>
 
       <p>
-        Join me as I connect ideas across disciplines and contribute to a
-        community passionate about understanding the universe through the lens
-        of mathematics.
+        If you're new here, here's the easiest way to explore:
       </p>
+
+      <ul>
+        <li>
+          <strong><a href="/visual-problems/">Path</a></strong> — my
+          problem-solving hub. This is where I collect interesting problems
+          I've worked on (Putnam, GRE, and others), together with the tactics,
+          visual ideas, and rabbit holes that came out of them.
+        </li>
+        <li>
+          <strong><a href="/blog/">Blog</a></strong> — essays and explanations
+          on topics from algebra and representation theory to physics and
+          dynamics, plus anything I find mathematically beautiful or surprising.
+        </li>
+      </ul>
+
+      <h2>Featured post</h2>
+
+      <p>
+        A good place to begin is with a bit of circle geometry inspired by
+        <em>Stranger Things</em>:
+      </p>
+
+      <p>
+        <strong>
+          <a href="/blog/stranger-things-circle/">
+            How a Circle Trick Revealed the Upside Down
+          </a>
+        </strong>
+      </p>
+
+      <h2>Problem-solving toolbox</h2>
+
+      <p>
+        I'm fascinated by <strong>problem-solving itself</strong> — how a clever trick
+        or a small shift in perspective can make a tough problem unfold. Over
+        time I've been building a toolbox of tactics I use on contests and
+        challenging problems: modular arithmetic shortcuts, symmetry arguments,
+        geometric transformations, and more.
+      </p>
+
+      <p>
+        You can explore these ideas, along with full write-ups of the problems
+        that motivated them, in <a href="/visual-problems/">Path</a>.
+      </p>
+
+      <h2>One theorem on my mind</h2>
 
       <p>
         Currently, one of my favorite theorems is Maschke’s Theorem — a
@@ -65,7 +99,13 @@ import MathJaxLoader from '../components/MathJaxLoader.tsx';
       <p>
         It’s a beautifully precise insight into how symmetry can be decomposed —
         and it reflects the kind of structure and elegance I hope to uncover in
-        both mathematics and physics.
+        both mathematics and physics. I write more about results like this, and
+        how they connect to other areas, on the <a href="/blog/">Blog</a>.
+      </p>
+
+      <p>
+        Thanks for visiting — I hope you find something here that makes you
+        think a little differently about mathematics.
       </p>
     </main>
     <Footer />

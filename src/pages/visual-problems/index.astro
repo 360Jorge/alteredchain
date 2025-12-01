@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import MathCapsule from '../../components/MathCapsule.jsx';
+import MathJaxLoader from '../../components/MathJaxLoader.tsx';
 
 // 1. Static posts from content/visual-problems
 const staticPosts = await getCollection('visual-problems');
@@ -29,17 +31,33 @@ const allPosts = [...staticPostEntries, ...interactivePosts];
 allPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 ---
 
-<BaseLayout title="Problem Solving" description="Explore all math problems with step-by-step visual solutions.">
-  <p>Explore challenging math problems — from Putnam and GRE to interesting puzzles I’ve found along the way.</p>
+<BaseLayout
+  title="Problem Solving"
+  description="Explore challenging math problems — from Putnam and GRE to interesting puzzles I’ve found along the way."
+>
+  <p>
+    Explore challenging math problems — from Putnam and GRE to interesting
+    puzzles I’ve found along the way. This is where I collect the questions
+    that sent me down a rabbit hole and the ideas that helped unlock them.
+  </p>
 
-  <ul style="list-style: none; padding: 0;">
+  <p>
+    Below is a rotating glimpse of some of the tactics I like to use — from
+    modular tricks to symmetry arguments and clever transformations. You’ll
+    see these show up throughout the problems that follow.
+  </p>
+
+  {/* interactive island here */}
+  <MathJaxLoader client:load />
+  <MathCapsule client:load />
+
+  <ul style="list-style: none; padding: 0; margin-top: 2.5rem;">
     {allPosts.map(({ url, title, description, pubDate }) => (
       <li key={url}>
         <article class="post-preview">
           <h2><a href={url}>{title}</a></h2>
           <p><em>{new Date(pubDate).toLocaleDateString()}</em></p>
           <p>{description}</p>
-          
         </article>
       </li>
     ))}
