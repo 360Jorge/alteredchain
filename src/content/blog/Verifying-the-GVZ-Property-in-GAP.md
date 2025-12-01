@@ -157,6 +157,5 @@ We'll log each result in a `.csv` file including:
 
 Once we gather enough data, we’ll explore:
 
-- **Machine learning** tools to detect deeper structural traits
 - **Visualizations** comparing GVZ vs. o-basis patterns
 - Discovering counterexamples or formulating improved conjectures
