@@ -8,19 +8,42 @@ isAnimated: true
 
 import VdpDemo from '@components/VdpCanvas.astro';
 
-The Van der Pol oscillator
+The Van der Pol oscillator is the nonlinear system
 
 $$
-x' = y, \qquad y' = \mu(1 - x^2)y - x
+x' = y, \qquad y' = \mu(1 - x^2)y - x,
 $$
 
-is a classic nonlinear system exhibiting limit cycles.
+where $\mu$ controls the strength of the nonlinear damping.
+
+The only equilibrium is at $(0,0)$. Linearizing near the origin gives
+
+$$
+\begin{pmatrix}x'\\y'\end{pmatrix}
+=
+\begin{pmatrix}
+0 & 1\\
+-1 & \mu
+\end{pmatrix}
+\begin{pmatrix}x\\y\end{pmatrix},
+$$
+
+so the eigenvalues satisfy $\lambda^2 - \mu\lambda + 1 = 0$. In particular, when
+$\mu = 0$ we have $\lambda = \pm i$, and as $\mu$ crosses $0$ the real part of
+the eigenvalues changes sign. This change in stability is the local signature of
+a **Hopf bifurcation**.
+
+For $\mu < 0$ the origin is a stable spiral and trajectories decay to $(0,0)$.
+For $\mu > 0$ the origin becomes unstable, but solutions do not blow up: the term
+$\mu(1-x^2)y$ injects energy at small amplitudes and dissipates energy at large
+amplitudes, producing a **stable limit cycle**.
 
 In this demo, the trajectory is computed in **Rust**, compiled to **WebAssembly**,
 and rendered in your browser using a `<canvas>`.
 
 <VdpDemo />
 
-Try refreshing and watch how the system spirals into its limit cycle. Later we
-could add sliders for $\mu$, initial conditions, and even show both time series
-and phase portrait.
+Try refreshing and watch how trajectories spiral away from the origin and settle
+onto the same closed orbit. Next we’ll add a slider for $\mu$ (and optionally
+initial conditions) to make the Hopf transition visible directly in the phase
+portrait.
