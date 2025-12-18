@@ -8,7 +8,11 @@ heroImage: '/blog-placeholder-5.jpg'
 
 import EnergyLandscape from "@components/EnergyLandscape.astro";
 import HarmonicPhasePortrait from "@components/HarmonicPhasePortrait";
-
+import HamiltonianFlowField from "@components/HamiltonianFlowField";
+import ConservativeVsDissipative from "@components/ConservativeVsDissipative";
+import LiouvilleBlob from "@components/LiouvilleBlob";
+import OrbitEnergyExchange from "@components/OrbitEnergyExchange";
+import NoetherMap from "@components/NoetherMap";
 
 
 Most of us first learn mechanics through Newton’s laws.  
@@ -44,7 +48,7 @@ If no energy is added or removed—no friction, no drag, no dissipation—then t
 
 This single fact already imposes strong restrictions. A system with fixed total energy cannot wander freely through all possible states. Instead, its motion is constrained to surfaces of constant energy.
 
-### Animation: Energy Landscape
+### Energy Landscape
 
 {/* 
   TODO: Insert an animation showing:
@@ -75,7 +79,7 @@ For conservative systems, trajectories do not spiral inward or outward. They for
 
 The geometry of these trajectories *is* the dynamics.
 
-### Animation: Harmonic Oscillator Phase Portrait
+### Harmonic Oscillator Phase Portrait
 
 {/* 
   TODO: Insert an animation showing:
@@ -118,7 +122,7 @@ $$
 
 These are **Hamilton’s equations**. They describe how the system moves through phase space as time evolves.
 
-### Animation: Hamilton’s Equations “Vector Field”
+### Hamilton’s Equations “Vector Field”
 
 {/* 
   TODO: Insert an animation showing:
@@ -127,6 +131,9 @@ These are **Hamilton’s equations**. They describe how the system moves through
   - Optional toggle: show ∂H/∂p and -∂H/∂q components
   Suggested component name: <HamiltonianFlowField />
 */}
+
+<HamiltonianFlowField client:visible />
+
 
 ### Newton vs. Hamilton: Two Views of the Same Physics
 
@@ -180,7 +187,7 @@ A Hamiltonian system has several defining properties:
 - **Time reversibility:** reversing time produces a valid trajectory
 - **Phase space volume is preserved**
 
-### Animation: Conservative vs Dissipative (Side-by-Side)
+### Conservative vs Dissipative (Side-by-Side)
 
 {/* 
   TODO: Insert an animation showing two phase portraits:
@@ -188,6 +195,8 @@ A Hamiltonian system has several defining properties:
   - Right: dissipative spirals into an attractor (fixed point or limit cycle)
   Suggested component name: <ConservativeVsDissipative />
 */}
+
+<ConservativeVsDissipative client:visible />
 
 That last property leads to one of the deepest results in the theory.
 
@@ -207,7 +216,7 @@ This has powerful consequences:
 
 This is why purely Hamiltonian systems cannot “settle down.” They preserve structure forever.
 
-### Animation: Liouville “Blob” (Area-Preserving Flow)
+### Liouville “Blob” (Area-Preserving Flow)
 
 {/* 
   TODO: Insert an animation showing:
@@ -216,6 +225,8 @@ This is why purely Hamiltonian systems cannot “settle down.” They preserve s
   - An annotation that area/volume stays constant
   Suggested component name: <LiouvilleBlob />
 */}
+
+<LiouvilleBlob client:visible />
 
 ---
 
@@ -238,7 +249,7 @@ Space is nearly empty. With no friction to remove energy, the orbit persists.
 
 This stability is not accidental. It is a geometric consequence of Hamiltonian structure.
 
-### Animation: Orbit Energy Exchange
+### Orbit Energy Exchange
 
 {/* 
   TODO: Insert an animation showing:
@@ -249,7 +260,7 @@ This stability is not accidental. It is a geometric consequence of Hamiltonian s
   Suggested component name: <OrbitEnergyExchange />
 */}
 
-### Optional Animation: Orbit in Phase Space (r, p_r)
+<OrbitEnergyExchange client:visible />
 
 {/* 
   TODO: Insert an animation showing:
@@ -270,13 +281,15 @@ Conservation laws arise from symmetry:
 
 This connection is formalized by **Noether’s theorem**, which shows that conservation laws are built into the structure of physical law itself.
 
-### Visual/Animation: Symmetry → Conservation Map
+###  Symmetry → Conservation Map
 
 {/* 
   TODO: Insert an infographic-style animation:
   - Click/hover symmetry to reveal conserved quantity
   Suggested component name: <NoetherMap />
 */}
+
+<NoetherMap client:visible />
 
 ---
 
@@ -298,7 +311,6 @@ But they cannot:
 
 If a system shows damping, attraction, or self-regulation, something non-Hamiltonian is at work.
 
-### Optional Animation: Taxonomy of Dynamical Systems
 
 {/* 
   TODO: Insert a simple interactive taxonomy:
@@ -320,7 +332,6 @@ But these effects are tiny. On human timescales, the Earth–Sun system is effec
 
 Understanding where Hamiltonian mechanics applies—and where it fails—is just as important as understanding the theory itself.
 
-### Optional Visual: Timescales Comparison
 
 {/* 
   TODO: Insert a chart comparing dissipation timescales:
