@@ -50,6 +50,9 @@ export default function LiouvilleBlob() {
   const [blobR, setBlobR] = useState(0.45);
   const [centerQ, setCenterQ] = useState(1.2);
   const [centerP, setCenterP] = useState(0.0);
+  const [paused, setPaused] = useState(false);
+  const [showInitial, setShowInitial] = useState(true);
+  const [showEnergy, setShowEnergy] = useState(true);
 
   // Hamiltonian choice: H = p^2/2 + q^4/4
   // qdot = ∂H/∂p = p
@@ -59,6 +62,8 @@ export default function LiouvilleBlob() {
     const pdot = -Math.pow(y.q, 3);
     return { q: qdot, p: pdot };
   };
+
+  const H = (pt: Pt) => (pt.p * pt.p) / 2 + Math.pow(pt.q, 4) / 4;
 
   // blob boundary points (ordered)
   const nBoundary = 90;
@@ -70,20 +75,32 @@ export default function LiouvilleBlob() {
 
   const [blob, setBlob] = useState<Pt[]>(initialBlob);
   const blobRef = useRef<Pt[]>(initialBlob);
+  const [areaHistory, setAreaHistory] = useState<number[]>([]);
 
   useEffect(() => {
     setBlob(initialBlob);
     blobRef.current = initialBlob;
+    setAreaHistory([]);
   }, [initialBlob]);
 
   // area readout: compare to initial area
   const A0 = useMemo(() => polygonArea(initialBlob), [initialBlob]);
   const A = useMemo(() => polygonArea(blob), [blob]);
 
+  // Track area over time for history
+  useEffect(() => {
+    setAreaHistory(prev => {
+      const next = [...prev, A];
+      return next.slice(-200); // Keep last 200 measurements
+    });
+  }, [A]);
+
   const rafRef = useRef<number | null>(null);
   const lastTRef = useRef<number>(0);
 
   useEffect(() => {
+    if (paused) return;
+
     function step(t: number) {
       if (!lastTRef.current) lastTRef.current = t;
       const dtRaw = (t - lastTRef.current) / 1000;
@@ -97,7 +114,7 @@ export default function LiouvilleBlob() {
       const next = current.map((pt) => {
         const out = rk2Step(pt, dt, flow);
 
-        // keep in frame with gentle clamp (not physically perfect but avoids disappearing)
+        // keep in frame with gentle clamp
         return {
           q: clamp(out.q, -qMax, qMax),
           p: clamp(out.p, -pMax, pMax),
@@ -116,11 +133,12 @@ export default function LiouvilleBlob() {
       rafRef.current = null;
       lastTRef.current = 0;
     };
-  }, [speed]);
+  }, [speed, paused]);
 
   const reset = () => {
     setBlob(initialBlob);
     blobRef.current = initialBlob;
+    setAreaHistory([]);
   };
 
   // SVG path for blob boundary
@@ -130,7 +148,68 @@ export default function LiouvilleBlob() {
     for (let i = 1; i < blob.length; i++) d += ` L ${toX(blob[i].q)} ${toY(blob[i].p)}`;
     d += " Z";
     return d;
-  }, [blob, qMax, pMax]);
+  }, [blob]);
+
+  const initialBlobPath = useMemo(() => {
+    if (initialBlob.length < 2) return "";
+    let d = `M ${toX(initialBlob[0].q)} ${toY(initialBlob[0].p)}`;
+    for (let i = 1; i < initialBlob.length; i++) d += ` L ${toX(initialBlob[i].q)} ${toY(initialBlob[i].p)}`;
+    d += " Z";
+    return d;
+  }, [initialBlob]);
+
+  // Compute energy contours for reference
+  const energyLevels = useMemo(() => {
+    if (!showEnergy) return [];
+    return [0.5, 1.0, 2.0, 3.5, 5.0];
+  }, [showEnergy]);
+
+  const energyPaths = useMemo(() => {
+    return energyLevels.map(E => {
+      // For H = p²/2 + q⁴/4 = E, solve for p(q)
+      const points: Pt[] = [];
+      const nPts = 200;
+      const qRange = Math.pow(4 * E, 0.25); // max q where p=0
+      
+      for (let i = 0; i <= nPts; i++) {
+        const q = -qRange + (i / nPts) * 2 * qRange;
+        const pSquared = 2 * (E - Math.pow(q, 4) / 4);
+        if (pSquared >= 0) {
+          const p = Math.sqrt(pSquared);
+          points.push({ q, p });
+        }
+      }
+      
+      // Add lower half (negative p)
+      for (let i = nPts; i >= 0; i--) {
+        const q = -qRange + (i / nPts) * 2 * qRange;
+        const pSquared = 2 * (E - Math.pow(q, 4) / 4);
+        if (pSquared >= 0) {
+          const p = -Math.sqrt(pSquared);
+          points.push({ q, p });
+        }
+      }
+      
+      if (points.length < 3) return { E, d: "" };
+      
+      let d = `M ${toX(points[0].q)} ${toY(points[0].p)}`;
+      for (let i = 1; i < points.length; i++) {
+        d += ` L ${toX(points[i].q)} ${toY(points[i].p)}`;
+      }
+      d += " Z";
+      
+      return { E, d };
+    });
+  }, [energyLevels]);
+
+  // Color based on area conservation
+  const areaRatio = A / A0;
+  const conservationQuality = Math.abs(1 - areaRatio);
+  const blobColor = conservationQuality < 0.05 
+    ? "rgba(34,197,94,0.55)"  // green if good
+    : conservationQuality < 0.1
+    ? "rgba(234,179,8,0.65)"  // yellow if okay
+    : "rgba(239,68,68,0.65)"; // red if drifting
 
   return (
     <div style={{ margin: "1.25rem 0" }}>
@@ -152,12 +231,60 @@ export default function LiouvilleBlob() {
             step={0.01}
             value={speed}
             onChange={(e) => setSpeed(parseFloat(e.target.value))}
-            style={{ width: 180 }}
+            style={{ width: 140 }}
           />
         </label>
 
+        <button
+          onClick={() => setPaused(!paused)}
+          style={{
+            padding: "6px 12px",
+            borderRadius: 6,
+            border: "1px solid rgba(148,163,184,0.4)",
+            background: "white",
+            cursor: "pointer",
+            fontSize: 12,
+            fontFamily: "inherit"
+          }}
+        >
+          {paused ? "▶ Play" : "⏸ Pause"}
+        </button>
+
+        <button
+          onClick={reset}
+          style={{
+            padding: "6px 12px",
+            borderRadius: 6,
+            border: "1px solid rgba(148,163,184,0.4)",
+            background: "white",
+            cursor: "pointer",
+            fontSize: 12,
+            fontFamily: "inherit"
+          }}
+        >
+           Reset
+        </button>
+
+        <label style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
+          <input
+            type="checkbox"
+            checked={showInitial}
+            onChange={(e) => setShowInitial(e.target.checked)}
+          />
+          <span style={{ fontSize: 13, opacity: 0.85 }}>Show initial</span>
+        </label>
+
+        <label style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
+          <input
+            type="checkbox"
+            checked={showEnergy}
+            onChange={(e) => setShowEnergy(e.target.checked)}
+          />
+          <span style={{ fontSize: 13, opacity: 0.85 }}>Energy contours</span>
+        </label>
+
         <label style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-          <span style={{ fontSize: 13, opacity: 0.85 }}>blob radius</span>
+          <span style={{ fontSize: 13, opacity: 0.85 }}>radius</span>
           <input
             type="range"
             min={0.15}
@@ -165,13 +292,13 @@ export default function LiouvilleBlob() {
             step={0.01}
             value={blobR}
             onChange={(e) => setBlobR(parseFloat(e.target.value))}
-            style={{ width: 160 }}
+            style={{ width: 120 }}
           />
           <span style={{ fontSize: 12, opacity: 0.75 }}>{blobR.toFixed(2)}</span>
         </label>
 
         <label style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-          <span style={{ fontSize: 13, opacity: 0.85 }}>center q</span>
+          <span style={{ fontSize: 13, opacity: 0.85 }}>q₀</span>
           <input
             type="range"
             min={-2.0}
@@ -179,13 +306,13 @@ export default function LiouvilleBlob() {
             step={0.01}
             value={centerQ}
             onChange={(e) => setCenterQ(parseFloat(e.target.value))}
-            style={{ width: 140 }}
+            style={{ width: 120 }}
           />
           <span style={{ fontSize: 12, opacity: 0.75 }}>{centerQ.toFixed(2)}</span>
         </label>
 
         <label style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-          <span style={{ fontSize: 13, opacity: 0.85 }}>center p</span>
+          <span style={{ fontSize: 13, opacity: 0.85 }}>p₀</span>
           <input
             type="range"
             min={-2.0}
@@ -193,27 +320,19 @@ export default function LiouvilleBlob() {
             step={0.01}
             value={centerP}
             onChange={(e) => setCenterP(parseFloat(e.target.value))}
-            style={{ width: 140 }}
+            style={{ width: 120 }}
           />
           <span style={{ fontSize: 12, opacity: 0.75 }}>{centerP.toFixed(2)}</span>
         </label>
 
-        <button
-          onClick={reset}
-          style={{
-            padding: "7px 12px",
-            borderRadius: 12,
-            border: "1px solid rgba(148,163,184,0.45)",
-            background: "rgba(255,255,255,0.55)",
-            cursor: "pointer",
-            fontSize: 13,
-          }}
-        >
-          Reset
-        </button>
-
-        <div style={{ fontSize: 12, opacity: 0.75 }}>
-          Area ≈ {A.toFixed(3)} (initial {A0.toFixed(3)}) • ratio ≈ {(A / A0).toFixed(3)}
+        <div style={{ 
+          fontSize: 12, 
+          opacity: 0.85,
+          padding: "4px 8px",
+          background: conservationQuality < 0.05 ? "rgba(34,197,94,0.1)" : "rgba(234,179,8,0.1)",
+          borderRadius: 4
+        }}>
+          A = {A.toFixed(4)} • A₀ = {A0.toFixed(4)} • ratio = {areaRatio.toFixed(4)}
         </div>
       </div>
 
@@ -221,7 +340,7 @@ export default function LiouvilleBlob() {
         width={width}
         height={height}
         viewBox={`0 0 ${width} ${height}`}
-        role="img"
+        role="application"
         aria-label="Liouville blob: area-preserving Hamiltonian flow"
         style={{
           width: "100%",
@@ -232,19 +351,85 @@ export default function LiouvilleBlob() {
         }}
       >
         {/* axes */}
-        <line x1={pad} y1={toY(0)} x2={width - pad} y2={toY(0)} stroke="rgba(15,23,42,0.35)" />
-        <line x1={toX(0)} y1={pad} x2={toX(0)} y2={height - pad} stroke="rgba(15,23,42,0.25)" />
+        <line 
+          x1={pad} 
+          y1={toY(0)} 
+          x2={width - pad} 
+          y2={toY(0)} 
+          stroke="rgba(15,23,42,0.35)" 
+          strokeWidth="1.5"
+        />
+        <line 
+          x1={toX(0)} 
+          y1={pad} 
+          x2={toX(0)} 
+          y2={height - pad} 
+          stroke="rgba(15,23,42,0.35)" 
+          strokeWidth="1.5"
+        />
 
         {/* labels */}
-        <text x={width - pad - 10} y={toY(0) - 8} fontSize="12" fill="rgba(15,23,42,0.75)" textAnchor="end">
-          q
+        <text 
+          x={width - pad - 10} 
+          y={toY(0) - 10} 
+          fontSize="13" 
+          fill="rgba(15,23,42,0.8)" 
+          textAnchor="end"
+          fontWeight="500"
+        >
+          q (position)
         </text>
-        <text x={toX(0) + 10} y={pad + 14} fontSize="12" fill="rgba(15,23,42,0.75)">
-          p
+        <text 
+          x={toX(0) + 12} 
+          y={pad + 16} 
+          fontSize="13" 
+          fill="rgba(15,23,42,0.8)"
+          fontWeight="500"
+        >
+          p (momentum)
         </text>
 
-        {/* blob */}
-        <path d={blobPath} fill="rgba(34,197,94,0.14)" stroke="rgba(34,197,94,0.55)" strokeWidth={2} />
+        {/* energy contours */}
+        {showEnergy && energyPaths.map(({ E, d }) => d && (
+          <path
+            key={E}
+            d={d}
+            fill="none"
+            stroke="rgba(148,163,184,0.3)"
+            strokeWidth={1}
+            strokeDasharray="4 4"
+          />
+        ))}
+
+        {/* initial blob outline */}
+        {showInitial && (
+          <path 
+            d={initialBlobPath} 
+            fill="none" 
+            stroke="rgba(100,116,139,0.4)" 
+            strokeWidth={2}
+            strokeDasharray="6 3"
+          />
+        )}
+
+        {/* current blob */}
+        <path 
+          d={blobPath} 
+          fill="rgba(34,197,94,0.14)" 
+          stroke={blobColor}
+          strokeWidth={2.5}
+        />
+
+        {/* boundary points (showing the mesh) */}
+        {blob.map((pt, i) => (
+          <circle
+            key={i}
+            cx={toX(pt.q)}
+            cy={toY(pt.p)}
+            r={2}
+            fill="rgba(34,197,94,0.6)"
+          />
+        ))}
 
         {/* centroid marker */}
         {blob.length > 0 && (
@@ -252,20 +437,30 @@ export default function LiouvilleBlob() {
             <circle
               cx={toX(blob.reduce((s, x) => s + x.q, 0) / blob.length)}
               cy={toY(blob.reduce((s, x) => s + x.p, 0) / blob.length)}
-              r={3.5}
-              fill="rgba(15,23,42,0.55)"
+              r={4.5}
+              fill="rgba(15,23,42,0.75)"
+            />
+            <circle
+              cx={toX(blob.reduce((s, x) => s + x.q, 0) / blob.length)}
+              cy={toY(blob.reduce((s, x) => s + x.p, 0) / blob.length)}
+              r={8}
+              fill="rgba(15,23,42,0.1)"
+              stroke="rgba(15,23,42,0.3)"
+              strokeWidth={1}
             />
           </g>
         )}
 
-        {/* annotation */}
-        <text x={pad} y={pad - 12} fontSize="12" fill="rgba(15,23,42,0.8)">
-          Hamiltonian flow stretches & shears — but preserves area (Liouville)
+        {/* title */}
+        <text x={pad} y={pad - 16} fontSize="12" fill="rgba(15,23,42,0.8)" fontWeight="500">
+          Liouville's Theorem: Phase Space Volume Conservation
         </text>
       </svg>
 
-      <p style={{ marginTop: "0.65rem", fontSize: 13, opacity: 0.8 }}>
-        The blob distorts under the flow, but its area stays (approximately) constant. Any drift is numerical error.
+      <p style={{ marginTop: "0.75rem", fontSize: 13, opacity: 0.8, lineHeight: 1.5 }}>
+        Watch as the blob stretches, shears, and rotates—but its area remains constant. This is <strong>Liouville's theorem</strong>: 
+        Hamiltonian flow preserves phase space volume. The color indicates conservation quality (green = excellent, yellow = good, red = numerical drift). 
+        Any deviation from ratio=1.0 is due to numerical integration error, not physics.
       </p>
     </div>
   );
