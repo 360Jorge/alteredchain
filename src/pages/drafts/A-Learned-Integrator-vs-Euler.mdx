@@ -1,0 +1,212 @@
+---
+title: "Teaching a Neural Network to Simulate Physics: A Learned Integrator vs Euler"
+description: "I trained a neural network to predict the future state of a dynamical system, and it beat Euler's method."
+pubDate: 2026-01-01
+tags: ["numerical methods", "machine learning", "dynamics", "Flask", "PyTorch"]
+---
+
+I’ve been interested for a while in the intersection of numerical methods, dynamical systems, and machine learning.  
+This project started as a simple question:
+
+**Can a neural network learn to act as a numerical integrator?**
+
+More specifically:  
+Can it outperform **Euler’s method** on a simple physical system?
+
+---
+
+## The Physical System
+
+We consider the simple harmonic oscillator:
+
+$$$$
+x'' = -x
+$$$$
+
+Writing this as a first-order system:
+
+$$$$
+\begin{aligned}
+x' &= v \\
+v' &= -x
+\end{aligned}
+$$$$
+
+The total energy is conserved:
+
+$$$$
+E = \frac{1}{2}(x^2 + v^2)
+$$$$
+
+In phase space $(x,v)$, this implies the trajectory should be a **circle**.
+
+This makes the system a perfect test case:  
+any numerical method that spirals outward or inward is **violating energy conservation**.
+
+---
+
+## Baseline: Euler’s Method
+
+Euler’s method updates the state as
+
+$$$$
+\begin{aligned}
+x_{n+1} &= x_n + h v_n \\
+v_{n+1} &= v_n - h x_n
+\end{aligned}
+$$$$
+
+While simple and fast, Euler’s method does **not preserve geometry**.  
+For this system, it introduces artificial energy.
+
+### Phase Portrait (Euler vs Exact)
+
+![Phase portrait: Exact vs Euler](/phase_compare.png)
+
+The orange curve spirals outward, showing steady energy growth.
+
+---
+
+## A Different Idea: Learn the Flow Map
+
+Instead of approximating derivatives, I trained a neural network to directly learn the **time-step map**:
+
+$$$$
+(x, v) \;\longrightarrow\; (x', v')
+$$$$
+
+This corresponds to learning the flow of the system over a fixed time step $h$.
+
+The network architecture is small and simple:
+
+```python
+class NextStateModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(2, 64),
+            nn.ReLU(),
+            nn.Linear(64, 64),
+            nn.ReLU(),
+            nn.Linear(64, 2)
+        )
+```
+
+## Training the Model
+
+To train the network, I generated data using the **exact solution** of the harmonic oscillator.
+
+For a fixed step size $h$, the exact flow map is a rotation in phase space:
+
+$$$$
+\begin{aligned}
+x(t+h) &= x(t)\cos h + v(t)\sin h \\
+v(t+h) &= -x(t)\sin h + v(t)\cos h
+\end{aligned}
+$$$$
+
+I sampled random initial states $(x, v)$ and used this map to produce training pairs:
+
+$$$$
+(x, v) \;\longrightarrow\; (x', v')
+$$$$
+
+The network was trained with mean squared error loss to approximate this mapping.
+
+Importantly, the model was **never told** about energy conservation, Hamiltonian structure, or geometry — it only saw data.
+
+---
+
+## Results: Phase Space Comparison
+
+After training, I compared three methods:
+
+- **Exact solution**
+- **Euler’s method**
+- **Learned integrator (ML)**
+
+### Phase Portrait
+
+![Phase portrait: Exact vs Euler vs ML](/images/phase_compare.png)
+
+Several things stand out immediately:
+
+- The **exact solution** traces a perfect circle, as expected.
+- **Euler’s method** spirals outward, showing artificial energy growth.
+- The **learned integrator** stays much closer to the invariant circle.
+
+Although the neural network is not explicitly symplectic, it has learned a time-step map that respects the geometry of the system far better than Euler’s method.
+
+---
+
+## Position Over Time
+
+![Position vs time: Exact vs Euler vs ML](/images/position_compare.png)
+
+Euler’s method gradually exaggerates the amplitude of oscillations.
+
+In contrast, the learned integrator tracks the sinusoidal motion much more closely over long time horizons.
+
+This is remarkable given that the network is small and trained purely from data.
+
+---
+
+## Interpretation
+
+This experiment highlights an important idea:
+
+> Numerical error is not just about local accuracy — it is about preserving structure.
+
+Euler’s method is a first-order approximation and does not preserve invariants such as energy.
+
+The learned integrator, however, approximates the **global flow map**, which allows it to implicitly respect geometric properties of the system.
+
+This places the experiment at the intersection of:
+
+- numerical analysis  
+- dynamical systems  
+- machine learning  
+- scientific computing  
+
+and connects naturally to ideas such as learned integrators, Neural ODEs, and structure-preserving methods.
+
+---
+
+## Limitations
+
+This is still a toy example, and several limitations are worth noting:
+
+- The model is trained for a **fixed step size** $h$.
+- There is no explicit constraint enforcing energy conservation.
+- Generalization to nonlinear or chaotic systems is not guaranteed.
+
+Nevertheless, even in this minimal setting, the results are encouraging.
+
+---
+
+## Future Directions
+
+Some natural extensions of this work include:
+
+- Adding the step size $h$ as an input to the network
+- Penalizing energy drift during training
+- Applying the approach to nonlinear systems (Van der Pol, pendulum)
+- Comparing against symplectic integrators
+- Building an interactive browser visualization
+
+Each of these directions moves closer to combining **learning** with **structure-aware computation**.
+
+---
+
+## Final Thoughts
+
+This project reinforced something important for me:
+
+> Machine learning does not replace mathematics —  
+> it becomes powerful when it works *with* mathematical structure.
+
+Even simple systems can reveal deep interactions between geometry, computation, and learning.
+
+This is the direction I want to keep exploring.
+
+— **Jorge**
