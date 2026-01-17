@@ -16,10 +16,12 @@
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "framer-motion": "^12.12.1",
+    "mermaid": "^11.12.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rehype-mathjax": "^7.1.0",
-    "remark-math": "^6.0.0"
+    "remark-math": "^6.0.0",
+    "remark-mermaidjs": "^7.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.27.4",
@@ -29,6 +31,7 @@
     "@types/mathjax": "^0.0.40",
     "@types/mdx": "^2.0.13",
     "@types/nlcst": "^2.0.3",
-    "astro": "^5.10.2"
+    "astro": "^5.10.2",
+    "playwright": "^1.57.0"
   }
 }

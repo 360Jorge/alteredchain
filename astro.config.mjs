@@ -6,12 +6,14 @@ import rehypeMathjax from 'rehype-mathjax';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 
+import remarkMermaid from 'remark-mermaidjs';
+
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://example.com',
-    integrations: [sitemap(), react(), mdx()],
-    markdown: {
-        remarkPlugins: [remarkMath],
-        rehypePlugins: [rehypeMathjax],
-      },
+  site: 'https://example.com',
+  integrations: [sitemap(), react(), mdx()],
+  markdown: {
+    remarkPlugins: [remarkMath, remarkMermaid],
+    rehypePlugins: [rehypeMathjax],
+  },
 });
