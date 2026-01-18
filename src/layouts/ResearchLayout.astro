@@ -1,0 +1,110 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const {
+  title = "Altered Chain",
+  description = "",
+  sectionTitle = "",
+  backHref = "",
+  backLabel = "Back",
+} = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead {title} {description} />
+  </head>
+  <body>
+    <Header />
+
+    <main class="prose max-w-full px-4 sm:px-6 lg:px-8 research">
+      {sectionTitle && (
+        <div class="research-head">
+          <p class="research-kicker">{sectionTitle}</p>
+
+          
+        </div>
+      )}
+
+      <h1 class="research-title">{title}</h1>
+
+      <slot />
+
+      {backHref && (
+  <nav class="research-footer-nav">
+    <a class="research-back-bottom" href={backHref}>
+      ← Back to {backLabel}
+    </a>
+  </nav>
+)}
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  /* Layout spacing that does NOT depend on Tailwind */
+  .research {
+    max-width: 860px;
+    margin: 0 auto;
+    padding-top: 2.25rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .research-head {
+    margin-top: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .research-kicker {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .research-back {
+    display: inline-block;
+    font-size: 0.95rem;
+    text-decoration: none;
+    opacity: 0.85;
+  }
+
+  .research-back:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .research-title {
+    margin: 0 0 1.75rem 0; /* <-- big breathing room before Abstract */
+    line-height: 1.1;
+  }
+
+  /* Extra breathing room for the first section heading (like "Abstract") */
+  .research :global(h2:first-of-type) {
+    margin-top: 1.25rem;
+  }
+
+  .research-footer-nav {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.research-back-bottom {
+  display: inline-block;
+  font-size: 0.95rem;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.research-back-bottom:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+</style>

@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const title = "AI Externalities Lab";
+const description =
+  "Mathematical models of AI's energy footprint: training vs inference, scaling laws, adoption dynamics, and efficiency incentives.";
+---
+
+<BaseLayout title={title} description={description} canonical="/research/ai-externalities/">
+  <main class="container">
+    <header class="hero">
+      <p class="kicker">Research track</p>
+
+      <p class="lede">
+        A math-first research program on the external costs of AI at scale: energy, carbon, and
+        the dynamics of adoption. Focus: modeling, theory, and clear quantitative claims.
+      </p>
+    </header>
+
+    <section class="section">
+      <h2>Projects</h2>
+
+      <article class="card">
+        <h3><a href="/research/ai-externalities/tokenfootprint/">TokenFootprint</a></h3>
+        <p>
+          A minimal mathematical framework for total AI energy: training + inference at scale.
+          Closed-form break-even time, growth models, and sensitivity analysis.
+        </p>
+        <p class="meta">Status: in progress</p>
+      </article>
+
+      <article class="card muted">
+        <h3>Coming next</h3>
+        <ul>
+          <li>Inference Dominance under logistic adoption</li>
+          <li>Rebound effects (efficiency → demand → footprint)</li>
+          <li>Carbon intensity as a time-dependent control</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .container { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.25rem; }
+  .hero { margin-bottom: 2rem; }
+  .kicker { letter-spacing: .08em; text-transform: uppercase; font-size: .85rem; opacity: .75; }
+  .lede { font-size: 1.05rem; line-height: 1.6; opacity: .9; }
+  .section h2 { margin-top: 2rem; margin-bottom: 1rem; }
+  .card { padding: 1.25rem; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; margin: 1rem 0; }
+  .card a { text-decoration: none; }
+  .meta { opacity: .75; font-size: .95rem; margin-top: .75rem; }
+  .muted { opacity: .95; }
+  ul { margin: .75rem 0 0 1.25rem; }
+</style>

@@ -2,6 +2,10 @@
   "name": "planetary-plasma",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=20.19.0",
+    "npm": ">=9"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -16,6 +20,7 @@
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "framer-motion": "^12.12.1",
+    "marked": "^16.4.2",
     "mermaid": "^11.12.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

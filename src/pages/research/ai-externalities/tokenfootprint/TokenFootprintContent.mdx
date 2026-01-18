@@ -1,0 +1,75 @@
+## Abstract
+
+We model the total energy footprint of a deployed AI system as a sum of **one-time training energy** and **cumulative inference energy** over time. The central goal is to derive **closed-form dominance thresholds** (when inference overtakes training), study how those thresholds shift under **adoption dynamics**, and identify which parameters are the highest-leverage targets for efficiency.
+
+## Model
+
+Let
+
+- $$E_{\text{train}}$$ be total training energy.
+- $$e$$ be inference energy per generated token.
+- $$r(t)$$ be the token generation rate (tokens per unit time).
+
+Define total energy up to horizon $$T$$:
+
+$$
+E_{\text{total}}(T) = E_{\text{train}} + \int_{0}^{T} e\,r(t)\,dt.
+$$
+
+Define inference energy:
+
+$$
+E_{\text{inf}}(T) = \int_{0}^{T} e\,r(t)\,dt.
+$$
+
+## Result 1: break-even (inference-dominance) time
+
+Define $$T^{\star}$$ by
+
+$$
+E_{\text{inf}}(T^{\star}) = E_{\text{train}}.
+$$
+
+### Constant usage
+
+If $$r(t)=r_0$$, then
+
+$$
+T^{\star} = \frac{E_{\text{train}}}{e\,r_0}.
+$$
+
+**Interpretation:** inference dominates sooner when efficiency is worse (larger $$e$$) or usage is higher (larger $$r_0$$).
+
+## Result 2: exponential adoption
+
+Assume
+
+$$
+r(t)=r_0 e^{gt}.
+$$
+
+Then
+
+$$
+E_{\text{inf}}(T) = \frac{e r_0}{g}\left(e^{gT}-1\right),
+$$
+
+and break-even is
+
+$$
+T^{\star} = \frac{1}{g}\ln\!\left(1+\frac{gE_{\text{train}}}{e r_0}\right).
+$$
+
+## Roadmap
+
+- [x] Minimal model (training + inference)
+- [x] Closed-form $$T^{\star}$$ for constant usage
+- [x] Closed-form $$T^{\star}$$ for exponential adoption
+- [ ] Logistic adoption model and asymptotics (early vs late time)
+- [ ] Sensitivity ranking: which parameter reductions matter most?
+- [ ] Carbon intensity as control: $$\gamma(t)$$ and emissions $$C(T)$$
+- [ ] “Rebound” effect model: efficiency improvements can increase demand
+
+## Notes
+
+This project is intentionally math-first: the model should stay interpretable, and every assumption should be explicit.

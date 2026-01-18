@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const title = "Research";
+const description =
+  "Research tracks on Altered Chain: AI Externalities, Formal Math, and Dynamical AI.";
+---
+
+<BaseLayout title={title} description={description}>
+  <main style="max-width: 860px; margin: 0 auto; padding: 2.5rem 1.25rem;">
+    <h2>Tracks</h2>
+
+    <div style="margin-top: 1.25rem;">
+      <h3>
+        <a href="/research/ai-externalities/">AI Externalities Lab</a>
+      </h3>
+      <p>
+        Math-first models of AI’s footprint at scale: training vs inference, adoption dynamics,
+        sensitivity, and efficiency incentives.
+      </p>
+    </div>
+
+    <div style="margin-top: 1.75rem; opacity: 0.8;">
+      <h3>Formal Math (Lean + AI)</h3>
+      <p>Coming soon.</p>
+    </div>
+
+    <div style="margin-top: 1.75rem; opacity: 0.8;">
+      <h3>Dynamical AI (PDEs)</h3>
+      <p>Coming soon.</p>
+    </div>
+  </main>
+</BaseLayout>
