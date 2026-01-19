@@ -19,26 +19,26 @@ const {
   <body>
     <Header />
 
-    <main class="prose max-w-full px-4 sm:px-6 lg:px-8 research">
-      {sectionTitle && (
-        <div class="research-head">
-          <p class="research-kicker">{sectionTitle}</p>
+    <main class="site-main">
+      <article class="prose research">
+        {sectionTitle && (
+          <div class="research-head">
+            <p class="research-kicker">{sectionTitle}</p>
+          </div>
+        )}
 
-          
-        </div>
-      )}
+        <h1 class="research-title">{title}</h1>
 
-      <h1 class="research-title">{title}</h1>
+        <slot />
 
-      <slot />
-
-      {backHref && (
-  <nav class="research-footer-nav">
-    <a class="research-back-bottom" href={backHref}>
-      ← Back to {backLabel}
-    </a>
-  </nav>
-)}
+        {backHref && (
+          <nav class="research-footer-nav">
+            <a class="research-back-bottom" href={backHref}>
+              ← Back to {backLabel}
+            </a>
+          </nav>
+        )}
+      </article>
     </main>
 
     <Footer />
@@ -46,13 +46,7 @@ const {
 </html>
 
 <style>
-  /* Layout spacing that does NOT depend on Tailwind */
-  .research {
-    max-width: 860px;
-    margin: 0 auto;
-    padding-top: 2.25rem;
-    padding-bottom: 2.5rem;
-  }
+  
 
   .research-head {
     margin-top: 1.25rem;
@@ -67,44 +61,64 @@ const {
     opacity: 0.7;
   }
 
-  .research-back {
-    display: inline-block;
-    font-size: 0.95rem;
-    text-decoration: none;
-    opacity: 0.85;
-  }
-
-  .research-back:hover {
-    opacity: 1;
-    text-decoration: underline;
-  }
-
   .research-title {
-    margin: 0 0 1.75rem 0; /* <-- big breathing room before Abstract */
-    line-height: 1.1;
+    font-size: clamp(2.1rem, 7vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.75rem 0;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
-  /* Extra breathing room for the first section heading (like "Abstract") */
   .research :global(h2:first-of-type) {
     margin-top: 1.25rem;
   }
 
   .research-footer-nav {
-  margin-top: 2.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-}
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
 
-.research-back-bottom {
-  display: inline-block;
-  font-size: 0.95rem;
-  text-decoration: none;
-  opacity: 0.85;
-}
+  .research-back-bottom {
+    display: inline-block;
+    font-size: 0.95rem;
+    text-decoration: none;
+    opacity: 0.85;
+  }
+  .research-back-bottom:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
 
-.research-back-bottom:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
+  /* Prevent overflow without “cutting” content */
+  .research :global(p),
+  .research :global(li),
+  .research :global(a) {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
 
+  .research :global(img),
+  .research :global(video),
+  .research :global(svg),
+  .research :global(canvas) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .research :global(pre),
+  .research :global(code) {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .research :global(.katex-display),
+  .research :global(.MathJax_Display),
+  .research :global(.mjx-container[display="true"]) {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 0.25rem;
+  }
 </style>

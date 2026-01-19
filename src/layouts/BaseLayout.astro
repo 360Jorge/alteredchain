@@ -1,3 +1,4 @@
+
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
@@ -12,11 +13,57 @@ const { title = "Visual Problems", description = "" } = Astro.props;
   </head>
   <body>
     <Header />
-    <main class="prose max-w-full px-4 sm:px-6 lg:px-8">
+    <main class="site-main">
+  <div class="prose">
+    <h1>{title}</h1>
+    <slot />
+  </div>
+</main>
 
-      <h1>{title}</h1>
-      <slot />
-    </main>
+
+
     <Footer />
   </body>
 </html>
+
+<style>
+
+
+  .site-main :global(img),
+  .site-main :global(video),
+  .site-main :global(svg),
+  .site-main :global(canvas) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .site-main :global(pre),
+  .site-main :global(code) {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .site-main :global(.katex-display),
+  .site-main :global(.MathJax_Display),
+  .site-main :global(.mjx-container[display="true"]) {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 0.25rem;
+  }
+
+  /* Optional: keep title hierarchy consistent */
+  .site-main :global(h1) {
+    font-size: clamp(2.4rem, 8vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+
+  .site-main :global(h2) {
+    font-size: clamp(1.6rem, 5.5vw, 2.2rem);
+    line-height: 1.15;
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+  }
+</style>

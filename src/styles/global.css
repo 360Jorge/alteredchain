@@ -43,12 +43,26 @@ body {
 	font-size: 20px;
 	line-height: 1.7;
 }
-main {
-	width: 720px;
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
+
+main.site-main {
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.25rem 1rem 2.5rem;
+  box-sizing: border-box;
+  min-width: 0;
 }
+
+@media (min-width: 640px) {
+  main.site-main { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+@media (min-width: 1024px) {
+  main.site-main { padding-left: 2rem; padding-right: 2rem; }
+}
+
+
+
+
 h1,
 h2,
 h3,
@@ -127,14 +141,12 @@ hr {
 	border: none;
 	border-top: 1px solid rgb(var(--gray-light));
 }
+
 @media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
+  body { font-size: 18px; }
 }
+
+
 
 .sr-only {
 	border: 0;
@@ -394,7 +406,7 @@ hr {
   border: 1px solid rgba(255, 255, 255, 0.03);
   border-radius: 1rem;
   height: 220px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .conic-note {
@@ -412,6 +424,75 @@ hr {
 .mermaid {
   max-width: 100%;
   overflow-x: auto;
+}
+
+/* Make common content containers not overflow */
+main, section, article, .prose {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Long words/URLs should wrap instead of pushing layout wider */
+p, li, a, h1, h2, h3, h4 {
+  overflow-wrap: break-word;
+}
+
+/* Media never exceed container */
+img, video, svg, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Code blocks can scroll horizontally (better than breaking layout) */
+pre, code {
+  max-width: 100%;
+}
+
+pre {
+  overflow-x: auto;
+}
+
+/* KaTeX/MathJax display math can scroll instead of breaking the page */
+.katex-display,
+.MathJax_Display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+
+
+/* --- DEBUGGING OUTLINES - uncomment to use --- 
+* {
+  outline: 1px solid rgba(255, 0, 0, 0.15);
+}
+
+html, body {
+  overflow-x: visible !important;
+}
+  */
+
+
+/* Make interactive blocks always respect the container */
+.math-capsule,
+.conic-toy,
+.post-preview {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Make MathJax display math scroll instead of overflowing */
+.mjx-container,
+.MathJax,
+.MathJax_Display,
+.mjx-math {
+  max-width: 100%;
+}
+
+.mjx-container[jax="CHTML"][display="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.25rem; /* prevents descenders from looking clipped */
 }
 
 

@@ -11,9 +11,10 @@ const description =
     <h2>Tracks</h2>
 
     <div style="margin-top: 1.25rem;">
-      <h3>
-        <a href="/research/ai-externalities/">AI Externalities Lab</a>
-      </h3>
+      <h3 style="margin: 0;">
+  <a class="track-link" href="/research/ai-externalities/">AI Externalities Lab</a>
+</h3>
+
       <p>
         Math-first models of AI’s footprint at scale: training vs inference, adoption dynamics,
         sensitivity, and efficiency incentives.
@@ -31,3 +32,20 @@ const description =
     </div>
   </main>
 </BaseLayout>
+
+<style>
+  .track-link {
+    text-decoration: none;
+    border-bottom: 3px solid rgba(var(--accent), 0.35);
+    color: var(--accent);
+    padding-bottom: 0.1rem;
+    display: inline;
+  }
+
+  .track-link:hover {
+    border-bottom-color: var(--accent);
+  }
+</style>
+
+
+
