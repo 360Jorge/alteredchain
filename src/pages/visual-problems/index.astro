@@ -41,16 +41,6 @@ allPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getT
     that sent me down a rabbit hole and the ideas that helped unlock them.
   </p>
 
-  <p>
-    Below is a rotating glimpse of some of the tactics I like to use — from
-    modular tricks to symmetry arguments and clever transformations. You’ll
-    see these show up throughout the problems that follow.
-  </p>
-
-  {/* interactive island here */}
-  <MathJaxLoader client:load />
-  <MathCapsule client:load />
-
   <ul style="list-style: none; padding: 0; margin-top: 2.5rem;">
     {allPosts.map(({ url, title, description, pubDate }) => (
       <li key={url}>
