@@ -11,9 +11,9 @@ This semester, I immersed myself in topology for the first time—and one of the
 
 ## What is the Cantor Set?
 
-<p>
+
 The Cantor set is constructed from the closed interval $[0, 1]$ by removing the open middle third $(1/3, 2/3)$. Then, from the remaining two intervals $[0, 1/3]$ and $[2/3, 1]$, we again remove the open middle third from each, and continue this process <em>ad infinitum</em>.
-</p>
+
 
 
 Despite being created by deleting intervals repeatedly, the resulting set:

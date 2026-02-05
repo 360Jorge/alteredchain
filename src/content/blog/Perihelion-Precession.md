@@ -5,8 +5,7 @@ tags: ["applied mathematics", "physics", "perturbation theory", "planetary motio
 description: "From small-angle pendulums to Mercury’s orbit, perturbation theory reveals how tiny nonlinearities create measurable cosmic effects."
 ---
 
-When we study perturbation theory in applied math, it often starts with something humble —  
-a pendulum swinging gently back and forth.  
+When we study perturbation theory in applied math, it often starts with something humble — a pendulum swinging gently back and forth.  
 
 But the same mathematical ideas explain **why Mercury’s orbit slowly rotates around the Sun**.  
 This post connects the two: from the *nonlinear pendulum* to *planetary precession*.
