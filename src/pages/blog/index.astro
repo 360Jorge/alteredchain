@@ -6,103 +6,172 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const all = await getCollection('blog');
+
+// Hide drafts in production if you use `draft: true` in frontmatter
+const posts = all
+  .filter((p) => (import.meta.env.PROD ? !p.data.draft : true))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Group by year (descending)
+const groups = posts.reduce((acc, post) => {
+  const year = post.data.pubDate.getFullYear();
+  (acc[year] ??= []).push(post);
+  return acc;
+}, /** @type {Record<number, typeof posts>} */ ({}));
+
+const years = Object.keys(groups).map(Number).sort((a, b) => b - a);
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main class="site-main">
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      .archive {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 2.5rem 1.25rem 4rem;
+      }
+
+      .year {
+        margin-top: 3rem;
+      }
+
+      .yearTitle {
+        font-size: 2.25rem;
+        letter-spacing: -0.02em;
+        margin: 0 0 1rem 0;
+        color: rgb(var(--black));
+      }
+
+      /* vertical reading guide (the trick) */
+      .timeline {
+        border-left: 1px solid rgba(0, 0, 0, 0.12);
+        padding-left: 1.25rem;
+      }
+
+      .row {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		column-gap: 1.25rem;
+		padding: 0.9rem 0;
+		align-items: start;
+	}
+
+
+    .date {
+		margin: 0;
+		opacity: 0.65;
+		white-space: nowrap;
+		color: rgb(var(--gray));
+		padding-top: 0.15rem;
+	}
+
+
+      .title {
+        margin: 0;
+        color: rgb(var(--black));
+        line-height: 1.2;
+        font-size: 1.25rem;
+        text-decoration: none;
+        display: inline-block;
+        transition: 0.2s ease;
+      }
+
+      a.title:hover {
+        color: rgb(var(--accent));
+        text-decoration: underline;
+      }
+
+      .desc {
+        margin: 0.35rem 0 0;
+        opacity: 0.78;
+        line-height: 1.45;
+        color: rgb(var(--black));
+      }
+
+      /* annotation-style tags */
+      .tags {
+        margin-top: 0.35rem;
+        display: flex;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        font-size: 0.95rem;
+        opacity: 0.75;
+      }
+
+      .tag {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        color: rgb(var(--gray));
+      }
+
+      /* subtle separators (optional but nice) */
+      .row + .row {
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      @media (max-width: 520px) {
+        .archive {
+          padding: 2rem 1rem 3rem;
+        }
+        .row {
+    		grid-template-columns: 1fr;
+    		row-gap: 0.25rem;
+  		}
+		    .date {
+          font-size: 0.9rem;
+      }
+        .yearTitle {
+          font-size: 1.9rem;
+        }
+        .title {
+          font-size: 1.1rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <Header />
+    <main class="site-main">
+      <section class="archive">
+        {years.map((year) => (
+          <div class="year">
+            <h2 class="yearTitle">{year}</h2>
+
+            <div class="timeline">
+              {groups[year].map((post) => (
+                <article class="row">
+                  <p class="date">
+                    <FormattedDate date={post.data.pubDate} />
+                  </p>
+
+                  <div>
+                    <a class="title" href={`/blog/${post.id}/`}>
+                      {post.data.title}
+                    </a>
+
+                    {post.data.description && (
+                      <p class="desc">{post.data.description}</p>
+                    )}
+
+                    {post.data.tags?.length ? (
+                      <div class="tags" aria-label="tags">
+                        {post.data.tags.map((t) => (
+                          <span class="tag">[{t}]</span>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        ))}
+      </section>
+    </main>
+    <Footer />
+  </body>
 </html>

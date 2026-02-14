@@ -1,0 +1,186 @@
+---
+title: "Basis as a Coordinate System (Not Just a Set of Vectors)"
+description: "Why coordinates depend on the basis, and why a basis is really a measuring grid."
+pubDate: 2026-02-09
+---
+
+import BasisGridDemo from '@components/BasisGridDemo.tsx';
+
+
+When we first learn vectors, coordinates feel absolute.
+
+A vector is  
+
+$$
+x = \begin{bmatrix} 7 \\ 4 \end{bmatrix}
+$$
+
+and that’s that.
+
+But linear algebra quietly hides a deeper truth:
+
+> **Coordinates are not properties of vectors — they are properties of vectors relative to a basis.**
+
+This post is about making that idea feel inevitable, not memorized.
+
+---
+
+## The familiar picture: the standard basis
+
+In $\mathbb{R}^2$, we usually work with the standard basis
+
+$$
+e_1 = \begin{bmatrix}1 \\ 0\end{bmatrix}, \quad
+e_2 = \begin{bmatrix}0 \\ 1\end{bmatrix}.
+$$
+
+Geometrically, these vectors define the horizontal and vertical directions.  
+If we place a vector $x$ with tail at the origin, we can write it as
+
+$$
+x = 7e_1 + 4e_2.
+$$
+
+That statement already contains structure:
+
+- the numbers $7$ and $4$ are **coordinates**
+- the vectors $e_1, e_2$ define the **grid** we are measuring against
+
+This is the coordinate system we implicitly use when we write
+
+$$
+x = \begin{bmatrix}7 \\ 4\end{bmatrix}.
+$$
+
+So far, nothing surprising.
+
+---
+
+## A different grid, same vector
+
+Now comes the important shift.
+
+Suppose instead we choose two different vectors:
+
+$$
+b_1 = \begin{bmatrix}3 \\ 1\end{bmatrix}, \quad
+b_2 = \begin{bmatrix}1 \\ 2\end{bmatrix}.
+$$
+
+These vectors are not perpendicular, not unit length, and not aligned with the axes —  
+but they still span the plane.
+
+With respect to this new pair, the *same geometric vector* $x$ can be written as
+
+$$
+x = 2b_1 + 1b_2.
+$$
+
+Suddenly, the coordinates of $x$ are no longer $(7,4)$.  
+They are now $(2,1)$.
+
+Nothing about the vector changed.  
+Only the **coordinate system** did.
+
+---
+
+## Visual intuition: changing the grid, not the vector
+
+Imagine freezing the vector $x$ in place.
+
+It stays exactly where it is in the plane. We are not allowed to move it.
+
+Now do the following mental experiment:
+
+1. Draw the standard grid formed by $e_1$ and $e_2$.
+   - horizontal lines every unit  
+   - vertical lines every unit  
+   - coordinates $(7,4)$ make sense because the grid is rectangular
+
+2. Erase the grid, but keep the vector.
+
+3. Draw a new grid using $b_1$ and $b_2$.
+   - lines parallel to $b_1$  
+   - lines parallel to $b_2$  
+   - the grid is skewed, not orthogonal
+
+Suddenly, the same point sits at the intersection corresponding to $(2,1)$.
+
+Nothing moved.  
+Only the **ruler** changed.
+
+That’s what a change of basis really is:
+- not rotating the vector  
+- not stretching space  
+- but replacing the measuring grid underneath it
+
+
+<BasisGridDemo client:load />
+
+
+---
+
+## What actually changed?
+
+This is the key insight:
+
+- A **vector** is a geometric object.
+- A **basis** is a measuring device.
+- **Coordinates depend on the measuring device.**
+
+When we choose a basis, we are deciding:
+- which directions count as “one unit”
+- how movement in space is decomposed
+- how numbers are assigned meaning
+
+In this sense, a basis is not just a set of vectors —  
+it is a **coordinate system**.
+
+---
+
+## Why not any collection of vectors?
+
+Not every set of vectors can play this role.
+
+- A single vector can’t describe the whole plane — some directions are unreachable.
+- Too many vectors can describe the same point in multiple ways, destroying uniqueness.
+
+For coordinates to make sense, we need:
+
+1. **Existence** — every vector must be reachable  
+2. **Uniqueness** — every vector must have exactly one coordinate description  
+
+These requirements are precisely why bases are defined using:
+- spanning
+- linear independence
+
+The definition is not arbitrary — it is forced by the idea of coordinates itself.
+
+---
+
+## The takeaway
+
+When you write
+
+$$
+x = \begin{bmatrix}7 \\ 4\end{bmatrix},
+$$
+
+you are secretly saying:
+
+> “The coordinate vector of $x$ relative to the standard basis is $(7,4)$.”
+
+Linear algebra begins when we stop treating that statement as obvious  
+and start asking what happens when the basis changes.
+
+That’s where structure lives.
+
+---
+
+### What’s next
+
+In the next post, we’ll answer a natural question:
+
+**Why do we need *both* spanning and linear independence — and what breaks when one is missing?**
+
+That question turns out to explain half of linear algebra.
