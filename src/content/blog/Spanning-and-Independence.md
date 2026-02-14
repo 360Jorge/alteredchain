@@ -40,7 +40,7 @@ $$
 Geometrically, this is just a line through the origin.
 
 So if $x$ is not on that line, there is no scalar $\alpha$ such that $x = \alpha b_1$.
-In that case, $x$ has **no coordinates** in your “system.” :contentReference[oaicite:1]{index=1}
+In that case, $x$ has **no coordinates** in your “system.”
 
 This is why spanning matters:
 
@@ -89,7 +89,7 @@ $$
 \begin{bmatrix}6\\-1\\5\end{bmatrix} \, ?
 $$
 
-There is no correct answer — because “coordinates” are no longer well-defined. :contentReference[oaicite:2]{index=2}
+There is no correct answer — because “coordinates” are no longer well-defined.
 
 This is why independence matters:
 
@@ -109,7 +109,7 @@ Let $S$ be a subspace of $\mathbb{R}^n$. A set $\{b_1,\dots,b_s\}$ is a basis fo
 2. $$b_1,\dots,b_s \text{ are linearly independent}$$
 
 Spanning ensures every vector in $S$ has coordinates.  
-Independence ensures those coordinates are unique. :contentReference[oaicite:3]{index=3}
+Independence ensures those coordinates are unique.
 
 So the definition isn’t a random textbook ritual.
 
