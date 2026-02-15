@@ -41,15 +41,134 @@ allPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getT
     that sent me down a rabbit hole and the ideas that helped unlock them.
   </p>
 
-  <ul style="list-style: none; padding: 0; margin-top: 2.5rem;">
-    {allPosts.map(({ url, title, description, pubDate }) => (
-      <li key={url}>
-        <article class="post-preview">
-          <h2><a href={url}>{title}</a></h2>
-          <p><em>{new Date(pubDate).toLocaleDateString()}</em></p>
-          <p>{description}</p>
-        </article>
-      </li>
-    ))}
-  </ul>
+  <section class="archive">
+    {Object.entries(
+      allPosts.reduce((acc, post) => {
+        const year = new Date(post.pubDate).getFullYear();
+        (acc[year] ??= []).push(post);
+        return acc;
+      }, {})
+    )
+      .sort(([a], [b]) => Number(b) - Number(a))
+      .map(([year, posts]) => (
+        <div class="year" key={year}>
+          <h2 class="yearTitle">{year}</h2>
+
+          <div class="timeline">
+            {posts.map((post) => (
+              <article class="row" key={post.url}>
+                <p class="date">
+                  <em>{new Date(post.pubDate).toLocaleDateString()}</em>
+                </p>
+
+                <div>
+                  <a class="title" href={post.url}>{post.title}</a>
+
+                  {post.description && <p class="desc">{post.description}</p>}
+
+                  {post.tags?.length ? (
+                    <div class="tags" aria-label="tags">
+                      {post.tags.map((t) => (
+                        <span class="tag">[{t}]</span>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))}
+  </section>
+
+  <style>
+    .archive {
+      margin-top: 2.5rem;
+      max-width: 760px;
+    }
+
+    .year {
+      margin-top: 3rem;
+    }
+
+    .yearTitle {
+      font-size: 2.1rem;
+      letter-spacing: -0.02em;
+      margin: 0 0 1rem 0;
+    }
+
+    /* vertical reading guide (the trick) */
+    .timeline {
+      border-left: 1px solid rgba(0, 0, 0, 0.12);
+      padding-left: 1.25rem;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      column-gap: 1.25rem;
+      padding: 0.9rem 0;
+      align-items: start;
+    }
+
+    .row + .row {
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .date {
+      margin: 0;
+      opacity: 0.65;
+      white-space: nowrap;
+      padding-top: 0.15rem;
+    }
+
+    .title {
+      display: inline-block;
+      font-size: 1.25rem;
+      line-height: 1.2;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+
+    .title:hover {
+      text-decoration: underline;
+    }
+
+    .desc {
+      margin: 0.35rem 0 0;
+      opacity: 0.78;
+      line-height: 1.45;
+    }
+
+    /* annotation-style tags */
+    .tags {
+      margin-top: 0.35rem;
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+      opacity: 0.75;
+    }
+
+    .tag {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+    }
+
+    @media (max-width: 520px) {
+      .row {
+        grid-template-columns: 1fr;
+        row-gap: 0.25rem;
+      }
+
+      .yearTitle {
+        font-size: 1.8rem;
+      }
+
+      .title {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
 </BaseLayout>
+
