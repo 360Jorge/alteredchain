@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="You're subscribed">
+  <main class="container">
+    <h1>You're in.</h1>
+
+    <p>
+      Thanks for subscribing — I’ll occasionally send notes about
+      mathematics, AI, and things I’m currently exploring.
+    </p>
+
+    <p style="opacity:.7;">
+      (You’ll receive a confirmation email first — Buttondown requires it.)
+    </p>
+
+    <a href="/" class="back">← Return to the site</a>
+  </main>
+</BaseLayout>
+
+<style>
+.container {
+  max-width: 650px;
+  margin: 4rem auto;
+  padding: 0 1rem;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 2rem;
+  opacity: .8;
+  text-decoration: none;
+}
+
+.back:hover { opacity: 1; }
+</style>
