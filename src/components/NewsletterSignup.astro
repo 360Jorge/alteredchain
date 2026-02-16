@@ -5,7 +5,7 @@ const {
   buttonText = "Subscribe",
   placeholder = "you@example.com",
   // Replace this with your provider form action URL
-  actionUrl = "https://buttondown.com/api/emails/embed-subscribe/alteredchain",
+  actionUrl = "https://buttondown.email/api/emails/embed-subscribe/alteredchain",
 } = Astro.props;
 ---
 
@@ -21,8 +21,6 @@ const {
         class="form"
         method="post"
         action={actionUrl}
-        target="popupwindow"
-        onsubmit="window.open('https://buttondown.com/alteredchain', 'popupwindow')"
       >
         <label class="sr-only" for="email">Email</label>
         <input
@@ -46,14 +44,16 @@ const {
 
 
 <style>
-  .newsletter-wrap{
+/* Keep the newsletter aligned with your article width */
+.newsletter-wrap{
   margin: 2.25rem auto;
-  padding: 0 1rem;   /* page gutter */
-  max-width: 900px;  /* match your content width */
+  width: min(900px, calc(100% - 2rem)); /* max 900px + gutters */
 }
 
 .newsletter{
-  padding: 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.1rem;
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 14px;
   background: rgba(255,255,255,0.03);
@@ -61,74 +61,91 @@ const {
 
 .newsletter-inner{
   display: grid;
-  gap: 1rem;
+  grid-template-columns: 1fr auto;
+  gap: 1.25rem;
   align-items: center;
 }
 
-@media (min-width: 700px){
-  .newsletter-inner{
-    grid-template-columns: 1fr auto;
-    gap: 1.25rem;
-  }
-}
-
-h3{ margin: 0 0 .25rem 0; font-size: 1.05rem; }
-p{ margin: 0; opacity: 0.85; }
-
-.form{
+/* Form layout */
+.newsletter .form{
   display: flex;
   gap: .6rem;
   align-items: center;
-  width: 100%;
+}
+
+/* IMPORTANT: hide the honeypot field (this was showing as the 2nd box) */
+.newsletter input.hp{
+  display: none !important;
+}
+
+.newsletter .form input[type="email"]{
+  /* override global “prose input” styles */
+  display: block !important;
+  width: 100% !important;
+
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+
+  padding: 0 .9rem !important;
+  margin: 0 !important;
+
+  font-size: 16px !important;       /* iOS zoom fix */
+  line-height: 44px !important;     /* keeps text vertically centered */
+
+  border-radius: 12px !important;
+  border: 1px solid rgba(0,0,0,0.25) !important;
+  background: rgba(0,0,0,0.06) !important;
+
+  box-sizing: border-box !important;
+  box-shadow: none !important;
+  outline: none;
+}
+
+
+.newsletter .form input[type="email"]:focus{
+  border-color: rgba(0,0,0,0.45);
+}
+
+.newsletter .form button{
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 44px;
+  padding: 0 1rem;
+
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.04);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.newsletter .form button:hover{
+  background: rgba(0,0,0,0.07);
+}
+
+
+/* Responsive */
+@media (max-width: 700px){
+  .newsletter-inner{
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
 }
 
 @media (max-width: 520px){
-  .form{
+  .newsletter .form{
     flex-direction: column;
     align-items: stretch;
   }
-  button{
+  .newsletter .form button{
     width: 100%;
   }
 }
 
-input[type="email"]{
-  flex: 1 1 220px;     /* can grow, can shrink, has a sane base */
-  min-width: 0;        /* IMPORTANT: allows shrinking inside flex */
-  width: 100%;
-  padding: .7rem .8rem;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(0,0,0,0.25);
-  color: inherit;
-  outline: none;
-}
 
-input[type="email"]:focus{
-  border-color: rgba(255,255,255,0.28);
-}
-
-button{
-  flex: 0 0 auto;      /* don’t shrink */
-  padding: .7rem .9rem;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.08);
-  color: inherit;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-button:hover{ background: rgba(255,255,255,0.12); }
-
-.sr-only{
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0,0,0,0);
-  white-space: nowrap; border: 0;
-}
-
-.hp{ display:none; }
 
 </style>
