@@ -21,6 +21,7 @@ const {
         class="form"
         method="post"
         action={actionUrl}
+        onsubmit="setTimeout(() => { window.location.href = '/subscribed'; }, 300);"
       >
         <label class="sr-only" for="email">Email</label>
         <input
