@@ -4,10 +4,6 @@ description: "Modeling respiratory sinus arrhythmia with two coupled Van der Pol
 pubDate: 2026-03-10
 ---
 
-*Feb 26, 2026*
-
----
-
 Your heart doesn't beat because something tells it to. It beats because it *has* to — it's a self-sustaining oscillator, a nonlinear dynamical system that generates its own rhythm from the inside out. No central command, no external clock. Just physics.
 
 That autonomy is beautiful. And it raises a question: if you wanted an AI to regulate a system like that — not replace it, but *negotiate* with it — how would you do it?
@@ -46,11 +42,12 @@ The parameters $\alpha$ and $\beta$ are the coupling strengths — how much each
 ## The Architecture
 
 ```
-Rust/WASM  →  runs the coupled ODE in the browser at ~60fps
-PyTorch    →  trains the coupling controller offline
-ONNX       →  exports the model as a portable format
-Next.js    →  API route loads the ONNX model, frontend runs the simulation
-Vercel     →  deployment (free tier)
+Rust/WASM          →  runs the coupled ODE in the browser at ~60fps
+PyTorch            →  trains the coupling controller offline
+ONNX               →  exports the model as a portable format
+onnxruntime-web    →  runs inference directly in the browser
+Next.js            →  frontend + build pipeline
+Vercel             →  deployment (free tier)
 ```
 
 The simulation loop looks like this every frame:
@@ -59,11 +56,12 @@ The simulation loop looks like this every frame:
 // 1. Step the ODE in WASM
 const result = coupled_vdp_step(mu1, mu2, alpha, beta, x1, y1, x2, y2, dt);
 
-// 2. Every 30 frames, ask the AI controller for new coupling values
-const { alpha, beta } = await fetch('/api/controller', {
-  method: 'POST',
-  body: JSON.stringify({ x1, y1, x2, y2, stress })
-});
+// 2. Every 30 frames, run inference in the browser
+const raw = [state.x1, state.y1, state.x2, state.y2, stress];
+const scaled = raw.map((v, i) => (v - SCALER_MEAN[i]) / SCALER_SCALE[i]);
+const tensor = new ort.Tensor('float32', Float32Array.from(scaled), [1, 5]);
+const results = await ortSession.run({ state: tensor });
+const [alpha, beta] = results.coupling.data;
 
 // 3. Render waveforms and phase portrait to canvas
 ```
@@ -94,7 +92,7 @@ After 200 epochs of Adam with MSE loss, validation loss settled at ~0.000001 —
 
 ---
 
-## Exporting to ONNX and Serving with Next.js
+## Exporting to ONNX
 
 Once trained, the model is exported with one line:
 
@@ -104,32 +102,32 @@ torch.onnx.export(model, dummy_input, "coupling_controller.onnx",
     opset_version=18, dynamo=False)
 ```
 
-On the Next.js side, a single API route loads the model once and caches the session:
+The scaler parameters (mean and standard deviation per feature) are hardcoded from training — a simple but effective way to handle preprocessing without a Python runtime.
 
-```javascript
-import * as ort from 'onnxruntime-node';
+---
 
-let session = null;
+## A Deployment Problem Worth Documenting
 
-async function getSession() {
-    if (!session) {
-        session = await ort.InferenceSession.create('coupling_controller.onnx');
-    }
-    return session;
-}
+The original plan was to serve inference server-side via a Next.js API route using `onnxruntime-node`. It worked perfectly in local development. Then we deployed to Vercel and every single API call returned a 500 error. The logs told the story immediately:
 
-export async function POST(request) {
-    const { x1, y1, x2, y2, stress } = await request.json();
-    const scaled = scaleInput(x1, y1, x2, y2, stress); // StandardScaler from training
-    const tensor = new ort.Tensor('float32', Float32Array.from(scaled), [1, 5]);
-    const sess = await getSession();
-    const results = await sess.run({ state: tensor });
-    const [alpha, beta] = results.coupling.data;
-    return Response.json({ alpha, beta });
-}
+```
+Error: libonnxruntime.so.1: cannot open shared object file: No such file or directory
 ```
 
-The scaler parameters (mean and standard deviation per feature) are hardcoded from training — a simple but effective way to handle preprocessing without a Python runtime.
+`onnxruntime-node` relies on a native shared library that doesn't exist in Vercel's serverless Lambda environment. The containers are stripped-down — they don't carry arbitrary native binaries. This is a known limitation but easy to miss if you've only tested locally.
+
+The fix turned out to be an architectural improvement: move inference entirely to the browser using `onnxruntime-web` instead. The model is only 19KB, so loading it client-side is fast. The API route disappeared entirely. The stack got simpler.
+
+```javascript
+// Load the ONNX session once, alongside the WASM module
+ort.env.wasm.wasmPaths = '/';
+ort.env.wasm.numThreads = 1;
+const session = await ort.InferenceSession.create('/coupling_controller.onnx');
+```
+
+The lesson: `onnxruntime-node` is for Node.js servers you control (a VPS, a container, a dedicated backend). For serverless platforms like Vercel, `onnxruntime-web` is the right tool — and for a small model running at ~2 inferences per second, the browser handles it effortlessly.
+
+This is the kind of thing you only learn by hitting the wall. Now you know.
 
 ---
 
@@ -156,4 +154,5 @@ The full source is available on [GitHub](https://github.com/360Jorge/heartbeat-a
 
 ---
 
-*Built with Rust, WebAssembly, PyTorch, ONNX, and Next.js. The simulation runs entirely client-side; the AI controller runs server-side via a Next.js API route.*
+*Built with Rust, WebAssembly, PyTorch, ONNX, and Next.js. Both the simulation and the AI inference run entirely client-side in the browser.*
+
