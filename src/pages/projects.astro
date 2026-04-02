@@ -1,0 +1,84 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const SITE_TITLE = "Projects — Jorge Guzman";
+const SITE_DESCRIPTION = "ML tools, math platforms, and client production apps built by Jorge Guzman.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main class="site-main">
+      <h1>Projects</h1>
+
+      <p>
+        A selection of things I've built — spanning ML systems, math tooling,
+        and client production work. Full source on <a href="https://github.com/360Jorge">GitHub</a>.
+      </p>
+
+      <hr />
+
+      <h2><a href="https://heartbeat-ai-seven.vercel.app" target="_blank" rel="noopener">Cardiac AI</a></h2>
+      <p>
+        Browser-based cardiac simulation using coupled Van der Pol oscillators. A neural
+        net controller trained in PyTorch is exported to ONNX and runs entirely client-side
+        via <code>onnxruntime-web</code> — no server, no backend, just math in the browser.
+      </p>
+      <p><strong>Stack:</strong> PyTorch · ONNX · onnxruntime-web · Rust/WASM · Vercel</p>
+
+      <hr />
+
+      <h2><a href="https://mathlab-theta.vercel.app" target="_blank" rel="noopener">MathLab</a></h2>
+      <p>
+        An Olympiad-style math problem platform with adaptive hint branching, KaTeX rendering,
+        and a Supabase backend. Designed around the idea that insight is structured — problems
+        are scaffolded with tactics, not just answers.
+      </p>
+      <p><strong>Stack:</strong> Next.js · Supabase · MDX · Tailwind · KaTeX</p>
+
+      <hr />
+
+      <h2>AI Proposal Generator</h2>
+      <p>
+        A Next.js app that generates client-facing project proposals from a brief input.
+        Server-side API handling with persistent agency profile storage — built as a
+        freelance income tool.
+      </p>
+      <p><strong>Stack:</strong> Next.js · Anthropic API · Vercel</p>
+
+      <hr />
+
+      <h2>Vehicle Wrap Pricing Calculator</h2>
+      <p>
+        A production client tool with multiple input modes, dynamic pricing logic, file
+        upload, and an AI failsafe for edge cases. Built and delivered as a freelance
+        subcontracting project.
+      </p>
+      <p><strong>Stack:</strong> JavaScript · Wix Velo</p>
+
+      <hr />
+
+      <h2><a href="/blog/building-a-local-ai-powered-shell-assistant/" target="_blank" rel="noopener">Local AI Shell Assistant</a></h2>
+      <p>
+        A locally-running AI-powered shell assistant built and documented as a blog post.
+        Covers the full build process from model setup to making it globally accessible
+        in the terminal.
+      </p>
+      <p><strong>Stack:</strong> Python · Shell · Local LLM</p>
+
+      <hr />
+
+      <p>
+        More on <a href="https://github.com/360Jorge">GitHub →</a>
+      </p>
+
+    </main>
+    <Footer />
+  </body>
+</html>
