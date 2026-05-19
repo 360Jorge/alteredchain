@@ -18,7 +18,7 @@ Let me walk through how I finally understood it.
 
 ## The Setup
 
-We're working modulo some number $P$. So the task is:
+We're working modulo some prime number $P$. So the task is:
 
 $$
 a + b \mod P
@@ -30,7 +30,11 @@ $$
 \{0,1,2,3,4,5,6\}.
 $$
 
-At first, I thought maybe $a$ and $b$ could be arbitrary numbers like 24 or 67—but in the model, they're actually elements of this finite set.
+At first, I wondered whether the model could take arbitrary integers like 24 or 67 and internally recognize their equivalence modulo $P$. But in this setup, the inputs are already reduced modulo $P$, so the model only ever sees elements of the finite set
+
+$$
+\{0,1,…,P−1\}.
+$$
 
 ---
 
@@ -60,7 +64,7 @@ I saw this part:
 
 And I thought:
 
-- Why are we looping over all $c$?
+- Why is the model checking every possible output $c \in \{0,1,…,P−1\}$?
 - Where did this cosine come from?
 - Is the model somehow testing every possible answer?
 
@@ -277,3 +281,7 @@ The key realization for me was:
 > It's asking: *which $c$ looks most like my computed result?*
 
 Once I saw that, everything else fell into place.
+
+---
+
+*Based on [Progress Measures for Grokking via Mechanistic Interpretability](https://arxiv.org/abs/2301.05217).*
