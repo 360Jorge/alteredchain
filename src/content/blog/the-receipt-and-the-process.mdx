@@ -1,0 +1,62 @@
+---
+title: "The Receipt and the Process"
+pubDate: 2026-05-20
+tags: ["mechanistic interpretability", "AI", "mathematics", "philosophy of mind"]
+description: "A general reasoning model just cracked an 80-year-old problem in discrete geometry using ideas from algebraic number theory. The unsettling part isn't the result. It's the reasoning trace we can't stop reading."
+---
+
+Today, OpenAI announced that an internal general-purpose reasoning model disproved a conjecture posed by Paul Erdős in 1946. The planar unit distance problem — how many pairs of *n* points in the plane can sit exactly one unit apart — had resisted resolution for nearly eighty years. The prevailing belief was that square grid configurations were essentially optimal. The model found an infinite family of constructions that does better, and the key ingredients came from algebraic number theory: a field with no obvious connection to the geometry of the problem.
+
+No formal proof system. No Lean search. No symbolic engine. A general reasoning model, given the problem, found a path mathematicians hadn't.
+
+That's the result. Here's what I can't stop thinking about.
+
+---
+
+The model's published reasoning traces read like a mathematician thinking out loud.
+
+*"If this construction fails, maybe try bounding the denominator differently…"*
+
+Ordinary English. The kind of thing you'd write in the margin of a notebook at 2am. No compressed latent representation, no alien symbolic code, no notation that requires a new language to parse. Just the familiar texture of mathematical thought — hesitation, revision, the conditional phrasing of someone who doesn't yet know whether the next move will work.
+
+Why is that strange?
+
+Because the computation that produced those words is not happening in English. It's happening in hundreds of millions of floating-point operations across high-dimensional activation space. The English is what gets decoded *out*. The question is what relationship that decoded output has to the thing that actually did the work.
+
+---
+
+There are two clean explanations, and they have completely different implications.
+
+**The first:** language is the reasoning. These models were trained on human mathematics, and human mathematics is not just expressed in language — it is, at least partly, *constituted* by it. The internal structure of mathematical thought, for humans, runs through notation, prose, the rhythm of *suppose... then... but this contradicts...* If the model internalized that structure deeply enough, then language-shaped reasoning might just be what its cognition *is*. The traces aren't a translation of something deeper. They're the substrate.
+
+**The second:** language is a projection. The real computation is happening somewhere else — in activation patterns that have no natural linguistic description. The verbal trace is what gets decoded because that's what the training signal rewarded: produce coherent, reasoning-flavored text alongside whatever you're actually computing. In this case, we're not reading the reasoning. We're reading a shadow cast by it.
+
+The uncomfortable part: both explanations predict exactly the same observable behavior. You cannot distinguish them from the outside.
+
+---
+
+Call it the receipt problem.
+
+When you buy something, a receipt prints. It's accurate — it reflects the transaction that just occurred. But the receipt is not the transaction. The actual exchange happened somewhere else, in systems you have no direct access to. The receipt can be faithful and still tell you almost nothing about the process that generated it.
+
+If the chain-of-thought trace is epiphenomenal — if the verbal "maybe bound the denominator differently" is a readout of a computation that already completed elsewhere in the network, rather than a cause of the next step — then we are in receipt territory. We're reading accurate logs of something we cannot see.
+
+This matters because most of how we currently try to understand these models involves reading what they say about what they're doing. Interpretability research, alignment work, capability evaluations — all of it leans, at some level, on the assumption that the legible output is meaningfully connected to the underlying computation. That the trace is process, not just product.
+
+---
+
+The mechanistic interpretability program has shown genuine progress at small scales. Work on grokking — the phenomenon where models suddenly generalize after extended training — has uncovered clean internal circuits: models doing modular arithmetic develop structures that functionally implement Fourier decomposition, representing numbers as points on circles rather than as discrete tokens. That's not a metaphor. The circuits are findable, the geometry is real, and it's nothing like what the surface behavior suggests.
+
+But those results live at the level of constrained arithmetic tasks. A general reasoning model doing open-ended mathematics — navigating an implicit search space large enough to find a connection between algebraic number fields and discrete geometry — is orders of magnitude more complex. Whether the circuit-level picture scales, whether legible structure persists at that depth, whether the verbal trace is anywhere near causally active in that regime: nobody knows.
+
+And if it turns out to be largely epiphenomenal — if the thinking we read is more like a diary than a mechanism — then the problem is not just technical. It means we cannot understand these systems by reading what they say. Not because they're lying. Because the saying and the doing are not the same process.
+
+---
+
+A model just found a proof that humans missed for eighty years, using a conceptual bridge nobody thought to build.
+
+When you read the trace, it sounds like insight.
+
+The question is whether that's what it is, or whether insight is just what this particular kind of output looks like from the outside — and whether, at this point, the distinction still matters.
+
+I don't know. Neither does anyone else.
