@@ -13,106 +13,100 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
   <body>
     <Header />
     <main class="site-main">
-      <h1>Exploring Mathematics and Patterns</h1>
+      <h1>Understanding How Intelligent Behavior Emerges from Learning</h1>
 
       <p>
-        Hey, I'm Jorge — an applied mathematics student and developer with a focus
-        on ML systems, numerical simulation, and backend tooling.
+        Hey, I'm Jorge — an applied mathematician and developer interested in
+        the learning dynamics behind modern AI systems.
       </p>
 
       <p>
-        I build things that sit at the intersection of math and engineering:
-        browser-based neural net controllers, Olympiad problem platforms, AI-powered
-        web tools. My work lives on <a href="https://github.com/360Jorge">GitHub</a>
-        and in the <a href="/projects/">Projects</a> section.
+        My work sits at the intersection of mathematics, machine learning, and
+        mechanistic interpretability. I am especially interested in a broad
+        scientific question:
+      </p>
+
+      <blockquote>
+        What training conditions give rise to qualitatively new behaviors in
+        learning systems?
+      </blockquote>
+
+      <p>
+        This question appears in many forms: grokking, representation learning,
+        long-horizon planning, tool use, coordination, and the emergence of
+        structured internal circuits. I want to understand not only whether these
+        behaviors appear, but when they appear, why they appear, and whether we
+        can detect their precursors before they become visible in behavior.
       </p>
 
       <p>
-        I'm also interested in the deeper questions — where <strong>mathematical
-        insight</strong> comes from, how formal reasoning scales, and what AI exposes
-        about the structure of knowledge. That's what the <a href="/blog/">Blog</a>
-        is for.
+        Altered Chain is my research notebook. Here I write about papers,
+        reproduce experiments, develop project ideas, and document my path toward
+        a deeper mathematical understanding of learning systems.
       </p>
 
       <h2>Where to start</h2>
 
+      <ul>
+        <li>
+          <strong><a href="/blog/">Blog</a></strong> — essays and technical notes
+          on learning dynamics, mechanistic interpretability, mathematics, and
+          AI research.
+        </li>
+        <li>
+          <strong><a href="/projects/">Projects</a></strong> — coding projects,
+          research experiments, mathematical tools, and applied ML work.
+        </li>
+      </ul>
+
+      <h2>Featured writing</h2>
+
       <p>
-        If you're new here, here's the easiest way to explore:
+        These posts best represent what I have been thinking about recently:
       </p>
 
       <ul>
         <li>
-          <strong><a href="/projects/">Projects</a></strong> — ML tools, math
-          platforms, and client production apps. Built with Python, PyTorch,
-          Next.js, and Rust/WASM.
+          <strong>
+            <a href="/blog/how-a-transformer-learns-modular-addition/">
+              How a Transformer Learns Modular Addition
+            </a>
+          </strong>
+          — a technical exploration of how a small transformer discovers
+          structure in a simple algorithmic task.
         </li>
+
         <li>
-          <strong><a href="/blog/">Blog</a></strong> — essays on topics from
-          algebra and representation theory to physics and dynamics, plus problem
-          walkthroughs (Putnam, GRE) and anything I find mathematically
-          beautiful or surprising.
+          <strong>
+            <a href="/blog/reading_grokking_after_mechanistic_interpretability/">
+              Reading Grokking After Mechanistic Interpretability
+            </a>
+          </strong>
+          — reflections on delayed generalization, learning dynamics, and how
+          mechanistic interpretability changes the way we read grokking.
         </li>
       </ul>
 
-      <h2>Featured post</h2>
+      <h2>Research direction</h2>
 
       <p>
-        If you want a post that captures what I've been thinking about lately —
-        contest problems, structure, and what formal proofs reveal — start here:
+        Modern AI systems often improve gradually in measured performance, yet
+        their learned strategies can change qualitatively during training. A
+        model may first memorize, then generalize. An agent may first act
+        reactively, then begin planning over long horizons. A system may first
+        learn local heuristics, then discover reusable internal structure.
       </p>
 
       <p>
-        <strong>
-          <a href="/blog/putnam-2016-a1-where-insight-lives/">
-            Putnam 2016 A1: Where Insight Lives (and Why Formal Proofs Expose It)
-          </a>
-        </strong>
-      </p>
-
-      <h2>From problems to systems</h2>
-
-      <p>
-        I'm fascinated by <strong>how reasoning works</strong> — not just how to
-        finish a proof once the right idea is known, but how that idea is found in
-        the first place.
+        I am interested in these transitions. My long-term goal is to combine
+        mathematical modeling, controlled experiments, and interpretability tools
+        to understand how complex behaviors emerge from simple training
+        processes.
       </p>
 
       <p>
-        That's why I like Putnam-style problems: they force you to notice structure
-        before you can "compute" anything. And it's also why I'm interested in
-        formal proof assistants (like Lean) and math-focused AI: they're excellent
-        at verification, but they expose exactly where the human part of math still
-        lives.
-      </p>
-
-      <p>
-        If that kind of thinking resonates, you'll probably enjoy the
-        essays and problem writeups on the <a href="/blog/">Blog</a>.
-      </p>
-
-      <h2>One theorem on my mind</h2>
-
-      <p>
-        Currently, one of my favorite theorems is Maschke's Theorem — a
-        fundamental result in representation theory which states:
-      </p>
-
-      <blockquote>
-        Every finite-dimensional representation of a finite group over a field
-        of characteristic not dividing the order of the group is completely
-        reducible.
-      </blockquote>
-
-      <p>
-        I love it because it's a theorem about <strong>decomposition</strong>:
-        when symmetry looks complicated, it can often be broken into clean,
-        understandable pieces — the kind of structural clarity I care about in
-        both pure math and modern computational settings.
-      </p>
-
-      <p>
-        Thanks for visiting — I hope you find something here that makes you
-        think a little differently about mathematics.
+        Thanks for visiting. I hope you find something here that makes you think
+        differently about mathematics, learning, or intelligence.
       </p>
     </main>
     <Footer />
