@@ -2,113 +2,116 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE } from '../consts';
+
+const description =
+  'Jorge Guzman’s personal website: mathematics, computational experiments, and visual explanations.';
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title={SITE_TITLE} description={description} />
   </head>
   <body>
     <Header />
+
     <main class="site-main">
-      <h1>Understanding How Intelligent Behavior Emerges from Learning</h1>
+      <section class="biography" aria-labelledby="bio-title">
+        <img
+          class="portrait"
+          src="/images/profile-pic.JPG"
+          alt="Jorge Guzman"
+          width="240"
+          height="240"
+        />
 
-      <p>
-        Hey, I'm Jorge — an applied mathematician and developer interested in
-        the learning dynamics behind modern AI systems.
-      </p>
+        <div class="bio-text">
+          <h1 id="bio-title">Hi, I’m Jorge Guzman.</h1>
 
-      <p>
-        My work sits at the intersection of mathematics, machine learning, and
-        mechanistic interpretability. I am especially interested in a broad
-        scientific question:
-      </p>
+          <p>
+            I’m an applied mathematics graduate with interests in topology,
+            algebra, dynamical systems, and AI. I enjoy exploring mathematical
+            ideas through proofs, code, and visual explanations.
+          </p>
 
-      <blockquote>
-        What training conditions give rise to qualitatively new behaviors in
-        learning systems?
-      </blockquote>
+          <p>
+            Altered Chain is where I share what I’m learning and building,
+            from mathematical explanations to computational experiments.
+          </p>
 
-      <p>
-        This question appears in many forms: grokking, representation learning,
-        long-horizon planning, tool use, coordination, and the emergence of
-        structured internal circuits. I want to understand not only whether these
-        behaviors appear, but when they appear, why they appear, and whether we
-        can detect their precursors before they become visible in behavior.
-      </p>
-
-      <p>
-        Altered Chain is my research notebook. Here I write about papers,
-        reproduce experiments, develop project ideas, and document my path toward
-        a deeper mathematical understanding of learning systems.
-      </p>
-
-      <h2>Where to start</h2>
-
-      <ul>
-        <li>
-          <strong><a href="/blog/">Blog</a></strong> — essays and technical notes
-          on learning dynamics, mechanistic interpretability, mathematics, and
-          AI research.
-        </li>
-        <li>
-          <strong><a href="/projects/">Projects</a></strong> — coding projects,
-          research experiments, mathematical tools, and applied ML work.
-        </li>
-      </ul>
-
-      <h2>Featured writing</h2>
-
-      <p>
-        These posts best represent what I have been thinking about recently:
-      </p>
-
-      <ul>
-        <li>
-          <strong>
-            <a href="/blog/how-a-transformer-learns-modular-addition/">
-              How a Transformer Learns Modular Addition
-            </a>
-          </strong>
-          — a technical exploration of how a small transformer discovers
-          structure in a simple algorithmic task.
-        </li>
-
-        <li>
-          <strong>
-            <a href="/blog/reading_grokking_after_mechanistic_interpretability/">
-              Reading Grokking After Mechanistic Interpretability
-            </a>
-          </strong>
-          — reflections on delayed generalization, learning dynamics, and how
-          mechanistic interpretability changes the way we read grokking.
-        </li>
-      </ul>
-
-      <h2>Research direction</h2>
-
-      <p>
-        Modern AI systems often improve gradually in measured performance, yet
-        their learned strategies can change qualitatively during training. A
-        model may first memorize, then generalize. An agent may first act
-        reactively, then begin planning over long horizons. A system may first
-        learn local heuristics, then discover reusable internal structure.
-      </p>
-
-      <p>
-        I am interested in these transitions. My long-term goal is to combine
-        mathematical modeling, controlled experiments, and interpretability tools
-        to understand how complex behaviors emerge from simple training
-        processes.
-      </p>
-
-      <p>
-        Thanks for visiting. I hope you find something here that makes you think
-        differently about mathematics, learning, or intelligence.
-      </p>
+          <nav class="bio-links" aria-label="Explore my work">
+            <a href="/blog/">Blog</a>
+            <a href="/projects/">Projects</a>
+          </nav>
+        </div>
+      </section>
     </main>
+
     <Footer />
   </body>
 </html>
+
+<style>
+  .site-main {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+  }
+
+  .biography {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .portrait {
+    display: block;
+    width: 240px;
+    height: 240px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+  }
+
+  .bio-text h1 {
+    margin: 0 0 1.25rem;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    line-height: 1.2;
+  }
+
+  .bio-text p {
+    margin: 0 0 1rem;
+    line-height: 1.75;
+  }
+
+  .bio-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .bio-links a {
+    font-weight: 600;
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 700px) {
+    .site-main {
+      padding: 3rem 1.5rem;
+    }
+
+    .biography {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .portrait {
+      width: 180px;
+      height: 180px;
+    }
+  }
+</style>
